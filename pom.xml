@@ -13,11 +13,11 @@
 
     <properties>
         <eclipselink.version>2.4.1</eclipselink.version>
-        <cvs.base.url>svn:http://svnrep1/svn3/SoftIP</cvs.base.url>
+        <cvs.base.url>http://svnrep1/svn3/SoftIP</cvs.base.url>
     </properties>
 
     <scm>
-        <connection>scm:svn:svn:http://svnrep1/svn3/SoftIP/branches/my.test.branch</connection>
+        <connection>scm:svn://http://svnrep1/svn3/SoftIP/trunk</connection>
     </scm>
 
     <build>
