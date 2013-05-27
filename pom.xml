@@ -33,6 +33,7 @@
                     <releaseProfiles>release</releaseProfiles>
                     <!--<goals>deploy</goals>-->
                     <goals>deploy assembly:single</goals>
+                    <branchName>my.test.branch</branchName>
                 </configuration>
             </plugin>
         </plugins>
