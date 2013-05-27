@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="95dac429-7323-49e5-81eb-7a0ae2838f1b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ip.home.iws" />
@@ -24,7 +25,7 @@
     <ignored path=".idea/.name" />
     <ignored path=".idea/" />
     <file path="$USER_HOME$/by.softclub.mobile/atlassian-ide-plugin.xml" changelist="95dac429-7323-49e5-81eb-7a0ae2838f1b" time="1369675278574" ignored="false" />
-    <file path="/Dummy.txt" changelist="95dac429-7323-49e5-81eb-7a0ae2838f1b" time="1369684933908" ignored="false" />
+    <file path="/Dummy.txt" changelist="95dac429-7323-49e5-81eb-7a0ae2838f1b" time="1369684943167" ignored="false" />
     <file path="/pom.xml" changelist="95dac429-7323-49e5-81eb-7a0ae2838f1b" time="1369684889816" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +88,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="30" selection-start="671" selection-end="671" vertical-scroll-proportion="0.5191257">
+            <state line="19" column="28" selection-start="669" selection-end="669" vertical-scroll-proportion="0.5191257">
               <folding />
             </state>
           </provider>
@@ -521,7 +522,11 @@
       <created>1369684938106</created>
       <updated>1369684938107</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="пустой проект&#10;">
+      <created>1369684950106</created>
+      <updated>1369684950106</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -688,7 +693,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="30" selection-start="671" selection-end="671" vertical-scroll-proportion="0.5191257">
+        <state line="19" column="28" selection-start="669" selection-end="669" vertical-scroll-proportion="0.5191257">
           <folding />
         </state>
       </provider>
