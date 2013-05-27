@@ -20,7 +20,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: by.softclub.netteller.services:bss.ejb:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.persistence:javax.persistence:2.0.4.v201112161009" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.persistence:eclipselink:2.4.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commonj.sdo:commonj.sdo:2.1.1.v201112051852" level="project" />
