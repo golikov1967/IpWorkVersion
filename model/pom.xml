@@ -34,12 +34,6 @@
             <version>1.0.0.GA</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>by.softclub.netteller.services</groupId>
-            <artifactId>bss.ejb</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>
