@@ -17,7 +17,7 @@
     </properties>
 
     <scm>
-        <connection>scm:svn:http://svnrep1/svn3/SoftIP/branches/my.test.branch</connection>
+        <connection>scm:svn:${cvs.base.url}/branches/my.test.branch</connection>
     </scm>
 
     <build>
@@ -26,8 +26,8 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.4.1</version>
                 <configuration>
-                    <branchBase>${cvs.base.url}/branches</branchBase>
-                    <tagBase>${cvs.base.url}/tags</tagBase>
+                    <branchBase>svn:${cvs.base.url}/branches</branchBase>
+                    <tagBase>svn:${cvs.base.url}/tags</tagBase>
                     <preparationGoals>clean install</preparationGoals>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <releaseProfiles>release</releaseProfiles>
