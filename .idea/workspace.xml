@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="e71a30ce-32b1-49b8-94d7-f5aff2d183af" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ip.home.iml" afterPath="$PROJECT_DIR$/ip.home.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/model.iml" afterPath="$PROJECT_DIR$/model/model.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ip.home.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="e71a30ce-32b1-49b8-94d7-f5aff2d183af" time="1369722046320" ignored="false" />
+    <file path="/Dummy.txt" changelist="e71a30ce-32b1-49b8-94d7-f5aff2d183af" time="1369722410777" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +70,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="33" selection-start="1027" selection-end="1027" vertical-scroll-proportion="0.9095941">
+            <state line="35" column="39" selection-start="1410" selection-end="1410" vertical-scroll-proportion="1.097786">
               <folding />
             </state>
           </provider>
@@ -126,6 +123,10 @@
         <PATH_ELEMENT>
           <option name="myItemId" value="Plugins" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginsNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="release" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -483,7 +484,15 @@
       <created>1369722050104</created>
       <updated>1369722050104</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004">
+      <created>1369722293104</created>
+      <updated>1369722293104</updated>
+    </task>
+    <task id="LOCAL-00005">
+      <created>1369722417103</created>
+      <updated>1369722417103</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -623,7 +632,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="33" selection-start="1027" selection-end="1027" vertical-scroll-proportion="0.9095941">
+        <state line="35" column="39" selection-start="1410" selection-end="1410" vertical-scroll-proportion="1.097786">
           <folding />
         </state>
       </provider>
