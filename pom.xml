@@ -17,7 +17,7 @@
     </properties>
 
     <scm>
-        <connection>scm:svn:${cvs.base.url}/branches/my.test.branch</connection>
+        <connection>scm:svn:svn:http://svnrep1/svn3/SoftIP/branches/my.test</connection>
     </scm>
 
     <build>
