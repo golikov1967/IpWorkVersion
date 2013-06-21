@@ -1,0 +1,46 @@
+package softclub.model.entities;
+
+import softclub.model.entities.VersionedEntity;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+//@NamedQueries({ @NamedQuery(
+//    name  = "Document.findAll",
+//    query = "select o from Document o"
+//) })
+@DiscriminatorValue("Document")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "DOCUMENT")
+public class Document extends VersionedEntity<Long> {
+
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "DOC_DATE")
+    protected Date docDate;
+
+    @Column(
+        name   = "DOC_NUMBER",
+        length = 15
+    )
+    protected String docNumber;
+
+    public Document() {}
+
+    public String getDocNumber() {
+        return docNumber;
+    }
+
+    public void setDocNumber(String docNumber) {
+        this.docNumber = docNumber;
+    }
+
+    public Date getDocDate() {
+        return docDate;
+    }
+
+    public void setDocDate(Date docDate) {
+        this.docDate = docDate;
+    }
+
+}
