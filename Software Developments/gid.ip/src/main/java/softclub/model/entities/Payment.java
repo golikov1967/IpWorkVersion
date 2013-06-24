@@ -16,102 +16,20 @@ import java.util.Date;
 @Table(name = "PAYMENT")
 public class Payment extends Document implements Serializable {
 
-    @ManyToOne(fetch = FetchType.LAZY)
     private Act act;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private PayType payType;
-
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "APPLY_DATE", nullable = false)
-    private Date applyDate;
-
     private Declaration declaration;
-
-    @Column(length = 2000, name = "PAY_NOTE")
+    private Date applyDate;
     private String payNote;
-
-    @Column(name = "PAY_SUM")
     private double paySum;
-
-    @Column(name = "PAY_SUM_STRING", length = 2000)
     private String paySumString;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private Account payerAccount;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private Account recipientAccount;
-
-    @Column(name = "SEQUENCE_NUMBER")
     private Integer sequenceNumber;
 
-    public Payment() {
-    }
-
-    public Account getPayerAccount() {
-        return payerAccount;
-    }
-
-    public void setPayerAccount(Account payerAccount) {
-        this.payerAccount = payerAccount;
-    }
-
-    public Account getRecipientAccount() {
-        return recipientAccount;
-    }
-
-    public void setRecipientAccount(Account recipientAccount) {
-        this.recipientAccount = recipientAccount;
-    }
-
-    public Date getApplyDate() {
-        return applyDate;
-    }
-
-    public void setApplyDate(Date applyDate) {
-        this.applyDate = applyDate;
-    }
-
-    public String getPaySumString() {
-        return paySumString;
-    }
-
-    public void setPaySumString(String paySumString) {
-        this.paySumString = paySumString;
-    }
-
-    public double getPaySum() {
-        return paySum;
-    }
-
-    public void setPaySum(double paySum) {
-        this.paySum = paySum;
-    }
-
-    public int getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(int sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
-    }
-
-    public String getPayNote() {
-        return payNote;
-    }
-
-    public void setPayNote(String payNote) {
-        this.payNote = payNote;
-    }
-
-    public Act getAct() {
-        return act;
-    }
-
-    public void setAct(Act act) {
-        this.act = act;
+    @ManyToOne(fetch = FetchType.LAZY)
+    public PayType getPayType() {
+        return payType;
     }
 
     @ManyToOne(fetch = FetchType.LAZY,
@@ -120,7 +38,92 @@ public class Payment extends Document implements Serializable {
         return declaration;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Act getAct() {
+        return act;
+    }
+
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "APPLY_DATE", nullable = false)
+    public Date getApplyDate() {
+        return applyDate;
+    }
+
+    public Payment() {
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Account getPayerAccount() {
+        return payerAccount;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Account getRecipientAccount() {
+        return recipientAccount;
+    }
+
+
+    @Column(name = "PAY_SUM_STRING", length = 2000)
+    public String getPaySumString() {
+        return paySumString;
+    }
+
+    @Column(name = "PAY_SUM")
+    public double getPaySum() {
+        return paySum;
+    }
+
+    @Column(name = "SEQUENCE_NUMBER")
+    public int getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    @Column(length = 2000, name = "PAY_NOTE")
+    public String getPayNote() {
+        return payNote;
+    }
+
+    public void setAct(Act act) {
+        this.act = act;
+    }
+
+    public void setPayerAccount(Account payerAccount) {
+        this.payerAccount = payerAccount;
+    }
+
+    public void setRecipientAccount(Account recipientAccount) {
+        this.recipientAccount = recipientAccount;
+    }
+
+    public void setApplyDate(Date applyDate) {
+        this.applyDate = applyDate;
+    }
+
+    public void setPaySumString(String paySumString) {
+        this.paySumString = paySumString;
+    }
+
+    public void setPaySum(double paySum) {
+        this.paySum = paySum;
+    }
+
+    public void setSequenceNumber(int sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+    }
+
+    public void setPayNote(String payNote) {
+        this.payNote = payNote;
+    }
+
     public void setDeclaration(Declaration declaration) {
         this.declaration = declaration;
+    }
+
+    public void setPayType(PayType payType) {
+        this.payType = payType;
+    }
+
+    public void setSequenceNumber(Integer sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 }

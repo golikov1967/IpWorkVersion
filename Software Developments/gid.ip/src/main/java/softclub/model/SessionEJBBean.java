@@ -1,7 +1,8 @@
 package softclub.model;
 
 import softclub.model.entities.*;
-import main.softclub.utils.DateUtils;
+import softclub.utils.DateUtils;
+//import softclub.utils.DateUtils;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;

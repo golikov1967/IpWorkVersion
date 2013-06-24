@@ -2,7 +2,7 @@
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
-    <persistence-unit name="ModelJP" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="NewModelIP" transaction-type="RESOURCE_LOCAL">
         <!--jta-data-source>jdbc/postgresDS</jta-data-source-->
         <class>softclub.model.entities.Account</class>
         <class>softclub.model.entities.Act</class>
@@ -44,6 +44,17 @@
             value="org.eclipse.persistence.logging.JavaLog"/>
             <!--"drop-and-create-tables", "create-tables" "create-or-extend-tables" "both" "none"-->
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="OldModelIP" transaction-type="RESOURCE_LOCAL">
+        <!--jta-data-source>jdbc/postgresDS</jta-data-source-->
+        <properties>
+            <!--Oracle-->
+            <property name="eclipselink.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:oracle:thin:@sc-oracle2:1521:SCKASSA"/>
+            <property name="eclipselink.jdbc.user" value="gid"/>
+            <property name="eclipselink.jdbc.password" value="bel769"/>
+            <property name="eclipselink.target-database" value="Oracle"/>
         </properties>
     </persistence-unit>
 </persistence>

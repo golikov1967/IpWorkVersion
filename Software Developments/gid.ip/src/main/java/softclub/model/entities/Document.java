@@ -15,28 +15,27 @@ import java.util.Date;
 @Table(name = "DOCUMENT")
 public class Document extends VersionedEntity<Long> {
 
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "DOC_DATE")
     protected Date docDate;
-
-    @Column(
-        name   = "DOC_NUMBER",
-        length = 15
-    )
     protected String docNumber;
 
     public Document() {}
 
+    @Column(
+            name   = "DOC_NUMBER",
+            length = 15
+    )
     public String getDocNumber() {
         return docNumber;
     }
 
-    public void setDocNumber(String docNumber) {
-        this.docNumber = docNumber;
-    }
-
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "DOC_DATE")
     public Date getDocDate() {
         return docDate;
+    }
+
+    public void setDocNumber(String docNumber) {
+        this.docNumber = docNumber;
     }
 
     public void setDocDate(Date docDate) {

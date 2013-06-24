@@ -10,18 +10,31 @@ import java.util.Date;
 
 public class SuperDeclaration extends VersionedEntity<Long> {
 
-    @Column(name = "TOTAL_INPUT_FROM_BEGIN_YEAR")
-    protected double totalInputFromBeginYear = 0;
-
-    @Column(name = "TOTAL_INPUT")
+    protected Date beginDate;
     protected double totalInput = 0;
-
-    @Column(name = "NALOG")
     protected double nalog = 0;
+    protected double totalInputFromBeginYear = 0;
 
     @Temporal(value = TemporalType.DATE)
     @Column(name = "BEGIN_DATE")
-    protected Date beginDate;
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
+    @Column(name = "NALOG")
+    public double getNalog() {
+        return nalog;
+    }
+
+    @Column(name = "TOTAL_INPUT_FROM_BEGIN_YEAR")
+    public double getTotalInputFromBeginYear() {
+        return totalInputFromBeginYear;
+    }
+
+    @Column(name = "TOTAL_INPUT")
+    public double getTotalInput() {
+        return totalInput;
+    }
 
     public void setTotalInput(double totalInput) {
         this.totalInput = totalInput;
@@ -36,23 +49,7 @@ public class SuperDeclaration extends VersionedEntity<Long> {
         this.totalInputFromBeginYear = totalInputFromBeginYear;
     }
 
-    public Date getBeginDate() {
-        return beginDate;
-    }
-
-    public double getTotalInput() {
-        return totalInput;
-    }
-
     public void setNalog(double nalog) {
         //this.nalog = nalog;
-    }
-
-    public double getTotalInputFromBeginYear() {
-        return totalInputFromBeginYear;
-    }
-
-    public double getNalog() {
-        return nalog;
     }
 }
