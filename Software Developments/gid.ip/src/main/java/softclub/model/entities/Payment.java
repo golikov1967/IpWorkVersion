@@ -27,6 +27,9 @@ public class Payment extends Document implements Serializable {
     private Account recipientAccount;
     private Integer sequenceNumber;
 
+    public Payment() {
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     public PayType getPayType() {
         return payType;
@@ -34,11 +37,16 @@ public class Payment extends Document implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = { CascadeType.ALL })
+    @JoinColumn(name = "DECLARATION_ID")
     public Declaration getDeclaration() {
         return declaration;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "ACT_DATE", referencedColumnName = "DOC_DATE"),
+            @JoinColumn(name = "ACT_NUMBER", referencedColumnName = "DOC_NUMBER")
+    })
     public Act getAct() {
         return act;
     }
@@ -49,15 +57,14 @@ public class Payment extends Document implements Serializable {
         return applyDate;
     }
 
-    public Payment() {
-    }
-
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PAYER_ACC_ID", referencedColumnName = "ACCOUNT_ID")
     public Account getPayerAccount() {
         return payerAccount;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RECIPIENT_ACC_ID", referencedColumnName = "ACCOUNT_ID")
     public Account getRecipientAccount() {
         return recipientAccount;
     }
@@ -74,7 +81,7 @@ public class Payment extends Document implements Serializable {
     }
 
     @Column(name = "SEQUENCE_NUMBER")
-    public int getSequenceNumber() {
+    public Integer getSequenceNumber() {
         return sequenceNumber;
     }
 
@@ -125,5 +132,15 @@ public class Payment extends Document implements Serializable {
 
     public void setSequenceNumber(Integer sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

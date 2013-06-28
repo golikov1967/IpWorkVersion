@@ -1,6 +1,7 @@
 package softclub.model.entities;
 
 import softclub.model.entities.VersionedEntity;
+import softclub.model.entities.pk.DocumentId;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,21 +14,20 @@ import java.util.Date;
 @DiscriminatorValue("Document")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "DOCUMENT")
-public class Document extends VersionedEntity<Long> {
+@IdClass(DocumentId.class)
+public class Document {
 
     protected Date docDate;
     protected String docNumber;
 
     public Document() {}
-
-    @Column(
-            name   = "DOC_NUMBER",
-            length = 15
-    )
+    @Id
+    @Column(name   = "DOC_NUMBER", length = 15)
     public String getDocNumber() {
         return docNumber;
     }
 
+    @Id
     @Temporal(value = TemporalType.DATE)
     @Column(name = "DOC_DATE")
     public Date getDocDate() {
@@ -42,4 +42,23 @@ public class Document extends VersionedEntity<Long> {
         this.docDate = docDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Document)) return false;
+
+        Document document = (Document) o;
+
+        if (!docDate.equals(document.docDate)) return false;
+        if (!docNumber.equals(document.docNumber)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = docDate.hashCode();
+        result = 31 * result + docNumber.hashCode();
+        return result;
+    }
 }

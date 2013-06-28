@@ -17,13 +17,14 @@
         <class>softclub.model.entities.PayType</class>
         <class>softclub.model.entities.Person</class>
         <class>softclub.model.entities.SuperDeclaration</class>
+        <class>softclub.model.entities.pk.DocumentId</class>
         <properties>
             <!--Oracle-->
-            <property name="eclipselink.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
-            <property name="eclipselink.jdbc.url" value="jdbc:oracle:thin:@sc-oracle2:1521:SCKASSA"/>
-            <property name="eclipselink.jdbc.user" value="gidpost"/>
-            <property name="eclipselink.jdbc.password" value="bel769"/>
-            <property name="eclipselink.target-database" value="Oracle"/>
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@sc-oracle2:1521:SCKASSA"/>
+            <property name="javax.persistence.jdbc.user" value="gidpost"/>
+            <property name="javax.persistence.jdbc.password" value="bel769"/>
+            <property name="javax.persistence.target-database" value="Oracle"/>
 
             <!--Postgres-->
             <!--<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>-->
@@ -33,28 +34,27 @@
             <!--<property name="eclipselink.target-database" value="PostgreSQL"/>-->
 
             <!--<property name="eclipselink.target-server" value="WebLogic 10"/>-->
-            <property name="eclipselink.application-location" value="."/>
-            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
-            <property name="eclipselink.create-ddl-jdbc-file-name" value="ipCreate.sql"/>
-            <property name="eclipselink.drop-ddl-jdbc-file-name" value="ipDrop.sql"/>
-            <property name="eclipselink.logging.file" value="LOC"/>
-            <property name="eclipselink.logging.exceptions" value="true"/>
-            <property name="eclipselink.logging.level" value="ALL"/>
-            <property name="eclipselink.logging.logger"
-            value="org.eclipse.persistence.logging.JavaLog"/>
             <!--"drop-and-create-tables", "create-tables" "create-or-extend-tables" "both" "none"-->
-            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="eclipselink.ddl-generation" value="none"/>
+            <property name="javax.persistence.application-location" value="."/>
+            <property name="javax.persistence.ddl-generation.output-mode" value="both"/>
+            <property name="javax.persistence.create-ddl-jdbc-file-name" value="ipCreate.sql"/>
+            <property name="javax.persistence.drop-ddl-jdbc-file-name" value="ipDrop.sql"/>
+            <!--<property name="javax.persistence.logging.file" value="log.txt"/>-->
+            <property name="javax.persistence.logging.exceptions" value="true"/>
+            <property name="javax.persistence.logging.level" value="FINE"/>
+            <!--<property name="javax.persistence.logging.logger" value="org.eclipse.persistence.logging.JavaLog"/>-->
         </properties>
     </persistence-unit>
     <persistence-unit name="OldModelIP" transaction-type="RESOURCE_LOCAL">
         <!--jta-data-source>jdbc/postgresDS</jta-data-source-->
         <properties>
             <!--Oracle-->
-            <property name="eclipselink.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
-            <property name="eclipselink.jdbc.url" value="jdbc:oracle:thin:@sc-oracle2:1521:SCKASSA"/>
-            <property name="eclipselink.jdbc.user" value="gid"/>
-            <property name="eclipselink.jdbc.password" value="bel769"/>
-            <property name="eclipselink.target-database" value="Oracle"/>
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@sc-oracle2:1521:SCKASSA"/>
+            <property name="javax.persistence.jdbc.user" value="gid"/>
+            <property name="javax.persistence.jdbc.password" value="bel769"/>
+            <property name="javax.persistence.target-database" value="Oracle"/>
         </properties>
     </persistence-unit>
 </persistence>

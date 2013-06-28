@@ -1,6 +1,7 @@
 package softclub.model;
 
 import softclub.model.entities.*;
+import softclub.model.entities.pk.DocumentId;
 import softclub.utils.DateUtils;
 //import softclub.utils.DateUtils;
 
@@ -186,7 +187,7 @@ public class SessionEJBBean implements SessionEJB {
 
     @Override
     public void removePayment(Payment payment) {
-        payment = em.find(Payment.class, payment.getId());
+        payment = em.find(Payment.class, new DocumentId(payment.getDocDate(), payment.getDocNumber()));
         em.remove(payment);
     }
 
@@ -267,7 +268,7 @@ public class SessionEJBBean implements SessionEJB {
 
     @Override
     public void removeContract(Contract contract) {
-        contract = em.find(Contract.class, contract.getId());
+        contract = em.find(Contract.class, new DocumentId(contract.getDocDate(), contract.getDocNumber()));
         em.remove(contract);
     }
 
@@ -315,7 +316,7 @@ public class SessionEJBBean implements SessionEJB {
 
     @Override
     public void removeAct(Act act) {
-        act = em.find(Act.class, act.getId());
+        act = em.find(Act.class, new DocumentId(act.getDocDate(), act.getDocNumber()));
         em.remove(act);
     }
 

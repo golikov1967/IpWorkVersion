@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,10 +31,7 @@ public class Act extends Document implements Serializable {
 
     private static Map actDateGetter = new HashMap<String, Integer>();
 
-    @ManyToOne
-    private Contract contract;
-
-    public Act() {
+    static{
         contractNumGetter.put("(СОГЛ. ДОГ. №)(.*)( ОТ ).*АКТ", 2);
         contractNumGetter.put("(ПО ДОГОВОРУ N)(.*)( ОТ )", 2);
         contractNumGetter.put("(по договору )(.*)( ОТ )", 2);
@@ -56,8 +51,25 @@ public class Act extends Document implements Serializable {
         contractDateGetter.put("( ОТ )(.*)( БЕЗ НДС.)", 2);
     }
 
+    private Contract contract;
+
+    private Set<Payment> paymentList = new HashSet<Payment>(0);
+
+    @OneToMany(mappedBy = "act")
+    public Set<Payment> getPaymentList() {
+        return paymentList;
+    }
+
+    @ManyToOne
     public Contract getContract() {
         return contract;
+    }
+
+    public void setPaymentList(Set<Payment> paymentList) {
+        this.paymentList = paymentList;
+    }
+
+    public Act() {
     }
 
     public void setContract(Contract contract) {
