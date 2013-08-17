@@ -10,11 +10,41 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>Model</module>
         <module>gid.ip</module>
     </modules>
 
+    <properties>
+        <compiler.source>1.6</compiler.source>
+        <compiler.target>1.6</compiler.target>
+        <shaversion>1.1.0</shaversion>
+        <needle.version>2.2</needle.version>
+        <eclipselink.version>2.4.1</eclipselink.version>
+    </properties>
+
     <dependencies>
+
+        <dependency>
+            <groupId>de.akquinet.jbosscc</groupId>
+            <artifactId>jbosscc-needle</artifactId>
+            <scope>test</scope>
+            <version>${needle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <version>2.0.0.Final</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -26,16 +56,6 @@
             <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-        <groupId>org.jboss.spec</groupId>
-        <artifactId>jboss-javaee-all-5.0</artifactId>
-        <version>1.0.0.GA</version>
-        </dependency>
     </dependencies>
 
-    <properties>
-        <compiler.source>1.6</compiler.source>
-        <compiler.target>1.6</compiler.target>
-        <shaversion>1.1.0</shaversion>
-    </properties>
 </project>
