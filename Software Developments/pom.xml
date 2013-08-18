@@ -17,6 +17,7 @@
         <shaversion>1.1.0</shaversion>
         <needle.version>2.2</needle.version>
         <eclipselink.version>2.4.1</eclipselink.version>
+        <svn.url>http://svnrep1/svn3/SoftIP/trunc/Software Developments</svn.url>
     </properties>
 
     <dependencies>
@@ -58,8 +59,8 @@
 
     <!--Управление релизами при помощи Maven-->
     <scm>
-        <developerConnection>scm:svn:http://svnrep1/svn3/SoftIP/trunk</developerConnection>
-        <url>http://svnrep1/svn3/SoftIP/trunk</url>
+        <developerConnection>scm:svn:${svn.url}</developerConnection>
+        <url>${svn.url}</url>
     </scm>
 
     <distributionManagement>
