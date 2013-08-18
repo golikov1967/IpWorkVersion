@@ -40,10 +40,11 @@
             <property name="javax.persistence.ddl-generation.output-mode" value="both"/>
             <property name="javax.persistence.create-ddl-jdbc-file-name" value="ipCreate.sql"/>
             <property name="javax.persistence.drop-ddl-jdbc-file-name" value="ipDrop.sql"/>
-            <!--<property name="javax.persistence.logging.file" value="log.txt"/>-->
+
+            <property name="javax.persistence.logging.file" value="persistence.log"/>
             <property name="javax.persistence.logging.exceptions" value="true"/>
             <property name="javax.persistence.logging.level" value="FINE"/>
-            <!--<property name="javax.persistence.logging.logger" value="org.eclipse.persistence.logging.JavaLog"/>-->
+            <property name="javax.persistence.logging.logger" value="org.eclipse.persistence.logging.JavaLog"/>
         </properties>
     </persistence-unit>
     <persistence-unit name="OldModelIP" transaction-type="RESOURCE_LOCAL">

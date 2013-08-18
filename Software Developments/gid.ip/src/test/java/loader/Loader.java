@@ -33,7 +33,8 @@ import static org.junit.Assert.assertNull;
  * Time: 17:34
  */
 public class Loader {
-    Logger LOGGER = Logger.getRootLogger();
+//    Logger LOGGER = Logger.getRootLogger();
+    Logger LOGGER = Logger.getLogger("loader.Loader");
 
     @Rule
     public DatabaseRule databaseRule = new DatabaseRule("NewModelIP");
@@ -76,9 +77,10 @@ public class Loader {
 
 
     private void addTestDocument(EntityManager oldEm, EntityManager newEm) {
-        Query oldDocumentQuey = oldEm.createNativeQuery("select * from In_pp");
+        Query oldDocumentQuey = oldEm.createNativeQuery("select * from In_pp where rownum<5");
         EntityTransaction transaction = newEm.getTransaction();
         transaction.begin();
+        int i = 0;
         for(Object o :oldDocumentQuey.getResultList()) {
             Object[] attr = (Object[]) o;
             final String docNumber = (String) attr[0];
@@ -108,13 +110,23 @@ public class Loader {
 //            document.ge
 
             newEm.merge(pay);
+            if(i++>100){
+                commit(newEm, transaction);
+                transaction.begin();
+                i=0;
+            }
+
         }
 
 //        Document document = new Document();
 //        document.setDocNumber("1");
+        commit(newEm, transaction);
+        LOGGER.error("загрузка прошла успешно, загружено " + oldDocumentQuey.getResultList().size() + " записей");
+    }
+
+    private void commit(EntityManager newEm, EntityTransaction transaction) {
         newEm.flush();
         transaction.commit();
-        LOGGER.error("загрузка прошла успешно, загружено " + oldDocumentQuey.getResultList().size() + " записей");
     }
 
     private Act findAct(EntityManager newEm, String actNumber, Date actDate) {

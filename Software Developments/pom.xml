@@ -58,4 +58,31 @@
         </dependency>
     </dependencies>
 
+    <!--Управление релизами при помощи Maven-->
+    <scm>
+        <developerConnection>scm:svn:http://svnrep1/svn3/SoftIP/trunk</developerConnection>
+        <url>http://svnrep1/svn3/SoftIP/trunk</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>ip release repository</name>
+            <url>http://svnrep1/svn3/SoftIP/trunk/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>ip snapshot repository</name>
+            <url>http://svnrep1/svn3/SoftIP/trunk/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.3.1</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
