@@ -81,6 +81,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
+                    <branchName>branch.ip.1</branchName>
                     <tagBase>http://svnrep1/svn3/SoftIP/tags</tagBase>
                     <branchBase>http://svnrep1/svn3/SoftIP/branches</branchBase>
                     <preparationGoals>clean install</preparationGoals>
