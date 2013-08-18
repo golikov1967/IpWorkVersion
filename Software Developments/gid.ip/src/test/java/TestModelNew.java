@@ -24,19 +24,19 @@ public class TestModelNew {
     @Test
     public void t1(){
 
-        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        oldFactory = Persistence.createEntityManagerFactory("ModelOld");
-        EntityManager em = factory.createEntityManager();
-        EntityManager oldEm = oldFactory.createEntityManager();
-        // Read the existing entries and write to console
-        addTestDocument(oldEm, em);
-
-        List<Document> list = queryListObjects(em, Document.class);
-        for (Document payment : list){
-            LOGGER.info("p=" + payment.toString());
-        }
-
-        em.close();
+//        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+//        oldFactory = Persistence.createEntityManagerFactory("ModelOld");
+//        EntityManager em = factory.createEntityManager();
+//        EntityManager oldEm = oldFactory.createEntityManager();
+//        // Read the existing entries and write to console
+//        addTestDocument(oldEm, em);
+//
+//        List<Document> list = queryListObjects(em, Document.class);
+//        for (Document payment : list){
+//            LOGGER.info("p=" + payment.toString());
+//        }
+//
+//        em.close();
     }
 
     private void addTestDocument(EntityManager oldEm, EntityManager em) {
