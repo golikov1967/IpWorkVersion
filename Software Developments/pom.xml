@@ -58,8 +58,8 @@
 
     <!--Управление релизами при помощи Maven-->
     <scm>
-        <developerConnection>scm:svn:http://svnrep1/svn3/SoftIP/branches/branch.ip.1</developerConnection>
-        <url>http://svnrep1/svn3/SoftIP/branches/branch.ip.1</url>
+        <developerConnection>scm:svn:http://svnrep1/svn3/SoftIP/trunk</developerConnection>
+        <url>http://svnrep1/svn3/SoftIP/trunk</url>
     </scm>
 
     <distributionManagement>
