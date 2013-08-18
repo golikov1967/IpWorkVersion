@@ -64,12 +64,12 @@
 
     <distributionManagement>
         <repository>
-            <id>nexus</id>
+            <id>gid</id>
             <name>ip release repository</name>
             <url>http://svnrep1/svn3/SoftIP/trunk/releases</url>
         </repository>
         <snapshotRepository>
-            <id>nexus</id>
+            <id>gid</id>
             <name>ip snapshot repository</name>
             <url>http://svnrep1/svn3/SoftIP/trunk/snapshots</url>
         </snapshotRepository>
