@@ -5,12 +5,12 @@
     <parent>
         <groupId>IP</groupId>
         <artifactId>IP</artifactId>
-        <version>1.2.3-SNAPSHOT</version>
+        <version>1.2.3</version>
     </parent>
 
     <groupId>IP</groupId>
     <artifactId>gid.ip</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.3</version>
     <packaging>ejb</packaging>
 
     <dependencies>
