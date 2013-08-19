@@ -42,7 +42,8 @@ public class Payment extends Document implements Serializable {
         return declaration;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = { CascadeType.ALL })
     @JoinColumns({
             @JoinColumn(name = "ACT_DATE", referencedColumnName = "DOC_DATE"),
             @JoinColumn(name = "ACT_NUMBER", referencedColumnName = "DOC_NUMBER")

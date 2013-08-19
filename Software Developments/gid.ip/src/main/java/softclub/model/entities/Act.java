@@ -60,7 +60,7 @@ public class Act extends Document implements Serializable {
         return paymentList;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     public Contract getContract() {
         return contract;
     }
