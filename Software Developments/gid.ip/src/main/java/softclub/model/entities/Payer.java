@@ -4,20 +4,32 @@ package softclub.model.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 //@NamedQueries({ @NamedQuery(
-//    name  = "CommonJudicInfo.findAll",
-//    query = "select o from CommonJudicInfo o"
+//    name  = "Payer.findAll",
+//    query = "select o from Payer o"
 //) })
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "COMMON_JUDIC_INFO")
-public class CommonJudicInfo extends VersionedEntity<Long> {
+@Table(name = "PAYER")
+public class Payer extends VersionedEntity<Long> {
     private String UNP;
     protected String name;
     private Date registrationDate;
+    private Set<Account> accounts = new HashSet<Account>();
 
-    public CommonJudicInfo() {}
+    @OneToMany(mappedBy = "owner")
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Payer() {}
 
     @Temporal(value = TemporalType.DATE)
     @Column(name = "REGISTRATION_DATE")
@@ -30,6 +42,7 @@ public class CommonJudicInfo extends VersionedEntity<Long> {
         return name;
     }
 
+    @Id
     @Column(length = 9)
     public String getUNP() {
         return UNP;

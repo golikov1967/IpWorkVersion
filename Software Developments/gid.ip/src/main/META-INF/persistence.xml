@@ -8,7 +8,7 @@
       <class>softclub.model.entities.Act</class>
       <class>softclub.model.entities.Bank</class>
       <class>softclub.model.entities.BussinessMan</class>
-      <class>softclub.model.entities.CommonJudicInfo</class>
+      <class>softclub.model.entities.Payer</class>
       <class>softclub.model.entities.Contract</class>
       <class>softclub.model.entities.Currency</class>
       <class>softclub.model.entities.Declaration</class>

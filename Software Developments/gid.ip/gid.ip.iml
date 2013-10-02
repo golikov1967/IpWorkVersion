@@ -15,8 +15,8 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
-          <factory-entry name="NewModelIP" />
-          <factory-entry name="OldModelIP" />
+          <factory-entry name="NewModelIP" value="0d89d199-7d51-4d80-acab-355e130b72ef" />
+          <factory-entry name="OldModelIP" value="ef0030f3-a60d-41f1-8236-977e9957d5a7" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/test/resources/META-INF/persistence.xml" />
       </configuration>

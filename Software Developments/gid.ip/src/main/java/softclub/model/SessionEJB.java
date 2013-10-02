@@ -13,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface SessionEJB {
-    List<BussinessMan> getBussinessManFindAll();
+    //List<BussinessMan> getBussinessManFindAll();
 
     void parseActList();
 
@@ -33,11 +33,11 @@ public interface SessionEJB {
 
     List<Bank> getBankFindAll();
 
-    BussinessMan persistBussinessMan(BussinessMan bussinessMan);
+    //BussinessMan persistBussinessMan(BussinessMan bussinessMan);
 
-    BussinessMan mergeBussinessMan(BussinessMan bussinessMan);
+    //BussinessMan mergeBussinessMan(BussinessMan bussinessMan);
 
-    void removeBussinessMan(BussinessMan bussinessMan);
+    //void removeBussinessMan(BussinessMan bussinessMan);
 
     Currency persistCurrency(Currency currency);
 
@@ -55,13 +55,13 @@ public interface SessionEJB {
 
     List<Payment> getPaymentForPeriod(Date begDay, Date endDay);
 
-    List<CommonJudicInfo> getCommonJudicInfoFindAll();
+    List<Payer> getCommonJudicInfoFindAll();
 
-    CommonJudicInfo persistCommonJudicInfo(CommonJudicInfo commonJudicInfo);
+    Payer persistCommonJudicInfo(Payer payer);
 
-    CommonJudicInfo mergeCommonJudicInfo(CommonJudicInfo commonJudicInfo);
+    Payer mergeCommonJudicInfo(Payer payer);
 
-    void removeCommonJudicInfo(CommonJudicInfo commonJudicInfo);
+    void removeCommonJudicInfo(Payer payer);
 
     PayType persistPayType(PayType payType);
 

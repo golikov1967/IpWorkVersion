@@ -12,7 +12,7 @@ import java.io.Serializable;
 ) })
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "BANK")
-public class Bank extends CommonJudicInfo implements Serializable {
+public class Bank extends Payer implements Serializable {
 
     @Column(length = 9)
     private String code;

@@ -11,8 +11,8 @@ import java.util.List;
 
 @WebService
 public interface SessionEJBBeanPortType extends Remote {
-    @WebMethod
-    public List<BussinessMan> getBussinessManFindAll();
+//    @WebMethod
+//    public List<BussinessMan> getBussinessManFindAll();
 
     @Oneway
     @WebMethod
@@ -44,15 +44,15 @@ public interface SessionEJBBeanPortType extends Remote {
     @WebMethod
     public List<Bank> getBankFindAll();
 
-    @WebMethod
-    public BussinessMan persistBussinessMan(BussinessMan bussinessMan);
+//    @WebMethod
+//    public BussinessMan persistBussinessMan(BussinessMan bussinessMan);
 
-    @WebMethod
-    public BussinessMan mergeBussinessMan(BussinessMan bussinessMan);
+//    @WebMethod
+//    public BussinessMan mergeBussinessMan(BussinessMan bussinessMan);
 
-    @Oneway
-    @WebMethod
-    public void removeBussinessMan(BussinessMan bussinessMan);
+//    @Oneway
+//    @WebMethod
+//    public void removeBussinessMan(BussinessMan bussinessMan);
 
     @WebMethod
     public Currency persistCurrency(Currency currency);
@@ -81,17 +81,17 @@ public interface SessionEJBBeanPortType extends Remote {
     public List<Payment> getPaymentForPeriod(Date begDay, Date endDay);
 
     @WebMethod
-    public List<CommonJudicInfo> getCommonJudicInfoFindAll();
+    public List<Payer> getCommonJudicInfoFindAll();
 
     @WebMethod
-    public CommonJudicInfo persistCommonJudicInfo(CommonJudicInfo commonJudicInfo);
+    public Payer persistCommonJudicInfo(Payer payer);
 
     @WebMethod
-    public CommonJudicInfo mergeCommonJudicInfo(CommonJudicInfo commonJudicInfo);
+    public Payer mergeCommonJudicInfo(Payer payer);
 
     @Oneway
     @WebMethod
-    public void removeCommonJudicInfo(CommonJudicInfo commonJudicInfo);
+    public void removeCommonJudicInfo(Payer payer);
 
     @WebMethod
     public PayType persistPayType(PayType payType);

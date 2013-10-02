@@ -31,21 +31,21 @@ public class SessionEJBBean implements SessionEJB {
     public SessionEJBBean() {
     }
 
-    /**
-     * <code>select o from BussinessMan o</code>
-     */
-    @Override
-    public List<BussinessMan> getBussinessManFindAll() {
-        Query q = em.createNamedQuery("BussinessMan.findAll");
-
-        // if (first != null && first > 0) {
-        // q.setFirstResult(first);
-        // if (max != null && max > 0) {
-        // q.setMaxResults(max);
-        // }
-        // }
-        return q.getResultList();
-    }
+//    /**
+//     * <code>select o from BussinessMan o</code>
+//     */
+//    @Override
+//    public List<BussinessMan> getBussinessManFindAll() {
+//        Query q = em.createNamedQuery("BussinessMan.findAll");
+//
+//        // if (first != null && first > 0) {
+//        // q.setFirstResult(first);
+//        // if (max != null && max > 0) {
+//        // q.setMaxResults(max);
+//        // }
+//        // }
+//        return q.getResultList();
+//    }
 
     @Override
     public void parseActList() {
@@ -129,23 +129,23 @@ public class SessionEJBBean implements SessionEJB {
         return em.createNamedQuery("Bank.findAll").getResultList();
     }
 
-    @Override
-    public BussinessMan persistBussinessMan(BussinessMan bussinessMan) {
-        em.persist(bussinessMan);
+//    @Override
+//    public BussinessMan persistBussinessMan(BussinessMan bussinessMan) {
+//        em.persist(bussinessMan);
+//
+//        return bussinessMan;
+//    }
 
-        return bussinessMan;
-    }
+//    @Override
+//    public BussinessMan mergeBussinessMan(BussinessMan bussinessMan) {
+//        return em.merge(bussinessMan);
+//    }
 
-    @Override
-    public BussinessMan mergeBussinessMan(BussinessMan bussinessMan) {
-        return em.merge(bussinessMan);
-    }
-
-    @Override
-    public void removeBussinessMan(BussinessMan bussinessMan) {
-        bussinessMan = em.find(BussinessMan.class, bussinessMan.getId());
-        em.remove(bussinessMan);
-    }
+//    @Override
+//    public void removeBussinessMan(BussinessMan bussinessMan) {
+//        bussinessMan = em.find(BussinessMan.class, bussinessMan.getId());
+//        em.remove(bussinessMan);
+//    }
 
     @Override
     public Currency persistCurrency(Currency currency) {
@@ -205,29 +205,29 @@ public class SessionEJBBean implements SessionEJB {
                                                                                           endDay).getResultList();
     }
 
-    /** <code>select o from CommonJudicInfo o</code> */
+    /** <code>select o from Payer o</code> */
     @Override
-    public List<CommonJudicInfo> getCommonJudicInfoFindAll() {
-        return em.createNamedQuery("CommonJudicInfo.findAll").getResultList();
+    public List<Payer> getCommonJudicInfoFindAll() {
+        return em.createNamedQuery("Payer.findAll").getResultList();
     }
 
     @Override
-    public CommonJudicInfo persistCommonJudicInfo(CommonJudicInfo commonJudicInfo) {
-        em.persist(commonJudicInfo);
+    public Payer persistCommonJudicInfo(Payer payer) {
+        em.persist(payer);
 
-        return commonJudicInfo;
+        return payer;
     }
 
     @Override
-    public CommonJudicInfo mergeCommonJudicInfo(CommonJudicInfo commonJudicInfo) {
-        return em.merge(commonJudicInfo);
+    public Payer mergeCommonJudicInfo(Payer payer) {
+        return em.merge(payer);
     }
 
     @Override
-    public void removeCommonJudicInfo(CommonJudicInfo commonJudicInfo) {
-        commonJudicInfo =
-                em.find(CommonJudicInfo.class, commonJudicInfo.getId());
-        em.remove(commonJudicInfo);
+    public void removeCommonJudicInfo(Payer payer) {
+        payer =
+                em.find(Payer.class, payer.getId());
+        em.remove(payer);
     }
 
     @Override

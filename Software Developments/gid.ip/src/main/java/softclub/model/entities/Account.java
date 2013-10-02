@@ -7,18 +7,19 @@ import javax.persistence.*;
 @Inheritance
 @Table(name = "ACCOUNT")
 public class Account extends VersionedEntity<Long> {
-
-    @Column(name = "ACCOUNT_NUMBER")
+    @Id
+    @Column(name = "ACCOUNT_NUMBER", nullable = false)
     private long accountNumber;
 
-    @ManyToOne
+    @Id
+    @ManyToOne(optional = true)
     private Bank bank;
 
     @ManyToOne
     private Currency currency;
 
     @ManyToOne
-    private CommonJudicInfo owner;
+    private Payer owner;
 
     public Account() {}
 
@@ -46,11 +47,28 @@ public class Account extends VersionedEntity<Long> {
         this.currency = currency;
     }
 
-    public CommonJudicInfo getOwner() {
+    public Payer getOwner() {
         return owner;
     }
 
-    public void setOwner(CommonJudicInfo commonJudicInfo) {
-        this.owner = commonJudicInfo;
+    public void setOwner(Payer payer) {
+        this.owner = payer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        if (accountNumber != account.accountNumber) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (accountNumber ^ (accountNumber >>> 32));
     }
 }

@@ -27,6 +27,7 @@ public class Currency extends VersionedEntity<Long> {
         length = 3,
         name   = "name_ISO"
     )
+    @Id
     private String nameISO;
 
     public Currency() {}

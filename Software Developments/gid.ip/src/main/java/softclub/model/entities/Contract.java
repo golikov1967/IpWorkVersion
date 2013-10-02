@@ -13,17 +13,17 @@ public class Contract extends Document implements Serializable {
 
     @ManyToOne
     //(columnDefinition = "клиент по договору")
-    private CommonJudicInfo customer;
+    private Payer customer;
 
     public Contract() {
     }
 
 
-    public CommonJudicInfo getCustomer() {
+    public Payer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CommonJudicInfo customer) {
+    public void setCustomer(Payer customer) {
         this.customer = customer;
     }
 }

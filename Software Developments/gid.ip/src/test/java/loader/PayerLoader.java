@@ -1,27 +1,17 @@
 package loader;
 
-import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
-import de.akquinet.jbosscc.needle.junit.DatabaseRule;
-import de.akquinet.jbosscc.needle.junit.NeedleRule;
 import loader.base.LoaderCore;
-import org.apache.log4j.Logger;
-import org.junit.Rule;
 import org.junit.Test;
-import softclub.model.SessionEJB;
-import softclub.model.SessionEJBBean;
 import softclub.model.entities.*;
 import softclub.model.entities.pk.DocumentId;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 
 /**
@@ -30,11 +20,11 @@ import static org.junit.Assert.assertNull;
  * Date: 21.06.13
  * Time: 17:34
  */
-public class Loader extends LoaderCore {
+public class PayerLoader extends LoaderCore {
 
 
     @Test
-    public void reloadData(){
+    public void reloadPayers(){
         EntityManager oldEm = oldDatabaseRule.getEntityManager();
         //EntityManager newEm = databaseRule.getEntityManager();
 
@@ -50,12 +40,9 @@ public class Loader extends LoaderCore {
         user = (String) newQ.getSingleResult();
         LOGGER.error("проверка прошла успешно user=" + user);
 
-        //загрузка приходных документов
         //loadIn_ppDocument(oldEm, newEm);
-        //загрузка субьектов
         loadPayers(oldEm, newEm);
-        //загрузка расходных документов
-        //loadOut_ppDocument(oldEm, newEm);
+        loadOut_ppDocument(oldEm, newEm);
     }
 
     private void loadPayers(EntityManager oldEm, EntityManager newEm) {
@@ -78,8 +65,7 @@ public class Loader extends LoaderCore {
             payer.setUNP((String) attr[0]);
             payer.setName((String) attr[1]);
             payer.getAccounts().add(findAccount((String) attr[2]));
-            newEm.merge(payer);
-            LOGGER.info(payer.getName() + ":" + payer.getUNP());
+            newEm.persist(payer);
         }
     }
 
