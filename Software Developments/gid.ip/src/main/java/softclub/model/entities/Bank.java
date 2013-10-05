@@ -10,7 +10,7 @@ import java.io.Serializable;
     name  = "Bank.findAll",
     query = "select o from Bank o"
 ) })
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "BANK")
 public class Bank extends Payer implements Serializable {
 

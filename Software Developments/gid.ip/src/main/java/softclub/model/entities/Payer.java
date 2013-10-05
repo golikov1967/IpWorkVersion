@@ -14,7 +14,7 @@ import java.util.Set;
 //) })
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "PAYER")
-public class Payer extends VersionedEntity<Long> {
+public class Payer extends VersionedEntity<String> {
     private String UNP;
     protected String name;
     private Date registrationDate;
@@ -44,11 +44,12 @@ public class Payer extends VersionedEntity<Long> {
 
     @Id
     @Column(length = 9)
-    public String getUNP() {
+    @Override
+    public String getId() {
         return UNP;
     }
 
-    public void setUNP(String UNP) {
+    public void setId(String UNP) {
         this.UNP = UNP;
     }
 

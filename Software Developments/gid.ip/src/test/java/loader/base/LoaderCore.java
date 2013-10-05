@@ -19,9 +19,9 @@ import javax.inject.Inject;
  */
 public class LoaderCore {
     @Rule
-    public DatabaseRule databaseRule = new DatabaseRule("NewModelIP");
+    public DatabaseRule newDatabaseRule = new DatabaseRule("NewModelIP");
     @Rule
-    public NeedleRule needleRule = new NeedleRule(databaseRule);
+    public NeedleRule needleRule = new NeedleRule(newDatabaseRule);
     @Rule
     public DatabaseRule oldDatabaseRule = new DatabaseRule("OldModelIP");
     @Rule

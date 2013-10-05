@@ -26,7 +26,7 @@ public class PayerLoader extends LoaderCore {
     @Test
     public void reloadPayers(){
         EntityManager oldEm = oldDatabaseRule.getEntityManager();
-        //EntityManager newEm = databaseRule.getEntityManager();
+        //EntityManager newEm = newDatabaseRule.getEntityManager();
 
         assertNotNull(oldEm);
         assertNotNull(newModel);
@@ -62,7 +62,7 @@ public class PayerLoader extends LoaderCore {
             } else{
                 payer = new Payer();
             }
-            payer.setUNP((String) attr[0]);
+            payer.setId((String) attr[0]);
             payer.setName((String) attr[1]);
             payer.getAccounts().add(findAccount((String) attr[2]));
             newEm.persist(payer);

@@ -5,8 +5,6 @@
       <configuration>
         <ejbRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
-          <root url="file://$MODULE_DIR$/src/test/java" />
-          <root url="file://$MODULE_DIR$/src/test/resources" />
         </ejbRoots>
       </configuration>
     </facet>
@@ -33,9 +31,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.eclipse.persistence:eclipselink:2.4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.persistence:javax.persistence:2.0.4.v201112161009" level="project" />
-    <orderEntry type="library" name="Maven: commonj.sdo:commonj.sdo:2.1.1.v201112051852" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.persistence:eclipselink:2.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.persistence:javax.persistence:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.oracle:ojdbc6:11.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: de.akquinet.jbosscc:jbosscc-needle:2.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-api:1.6.1" level="project" />
