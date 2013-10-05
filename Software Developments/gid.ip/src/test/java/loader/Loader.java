@@ -69,7 +69,7 @@ public class Loader extends LoaderCore {
             Object[] attr = (Object[]) o;
             String bankCode = (String) attr[3];
             final Payer payer;
-            if(bankCode==null){
+            if(bankCode!=null){
                 payer = new Bank();
                 ((Bank)payer).setCode(bankCode);
             } else{
@@ -81,6 +81,8 @@ public class Loader extends LoaderCore {
             newEm.merge(payer);
             LOGGER.info(payer.getName() + ":" + payer.getId());
         }
+        commit(newEm, transaction);
+        LOGGER.error("загрузка плательщиков прошла успешно, загружено " + oldDocumentQuey.getResultList().size() + " записей");
     }
 
     private Account findAccount(String account) {
