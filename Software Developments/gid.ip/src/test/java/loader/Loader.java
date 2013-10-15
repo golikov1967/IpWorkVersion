@@ -32,6 +32,23 @@ import static org.junit.Assert.assertNull;
  */
 public class Loader extends LoaderCore {
 
+    public static final String SELECT_PAY_TYPES =
+            "select  t.type_code, min(t.long_name), min(t.queue), min(t.pay_code) from pay_types t group by t.type_code";
+    public static final String SELECT_OUT_PP =
+            "select id_pp,\n" +
+            "       o.doc_date,\n" +
+            "       o.doc_sum,\n" +
+            "       p.unp p_unp,\n" +
+            "       o.bank4get,\n" +
+            "       b.unp b_unp,\n" +
+            "       pt.type_code,\n" +
+            "       o.pay_type_text,\n" +
+            "       o.oper_date,\n" +
+            "       o.bank4put\n" +
+            "  from out_pp o, payers p, payers b, pay_types pt\n" +
+            "  where o.payer_id = p.payer_id(+)\n" +
+            "  and o.beneficiary = b.payer_id(+)\n" +
+            "  and o.pay_type_id = pt.pay_type_id(+)";
 
     @Test
     public void reloadData(){
@@ -54,8 +71,32 @@ public class Loader extends LoaderCore {
         //loadIn_ppDocument(oldEm, newEm);
         //загрузка субьектов
         loadPayers(oldEm, newEm);
+        //загрузка типов платежа
+        loadPayTypes(oldEm, newEm);
         //загрузка расходных документов
-        //loadOut_ppDocument(oldEm, newEm);
+        loadOut_ppDocument(oldEm, newEm);
+    }
+
+    private void loadPayTypes(EntityManager oldEm, EntityManager newEm) {
+        Query payTypesQuery = oldEm.createNativeQuery(SELECT_PAY_TYPES);
+        EntityTransaction transaction = newEm.getTransaction();
+        transaction.begin();
+        int i = 0;
+        for(Object o :payTypesQuery.getResultList()) {
+            Object[] attr = (Object[]) o;
+            final PayType payType = new PayType();
+            payType.setId((String) attr[0]);
+            payType.setNote((String) attr[1]);
+            payType.setQueue(((BigDecimal) attr[2]).intValue());
+            BigDecimal payCode = (BigDecimal) attr[3];
+            if(payCode!=null){
+                payType.setPayCode(payCode.intValue());
+            }
+            newEm.merge(payType);
+            LOGGER.info(payType.getId() + ":" + payType.getNote());
+        }
+        commit(newEm, transaction);
+        LOGGER.error("загрузка Типов платежей прошла успешно, загружено " + payTypesQuery.getResultList().size() + " записей");
     }
 
     private void loadPayers(EntityManager oldEm, EntityManager newEm) {
@@ -90,7 +131,7 @@ public class Loader extends LoaderCore {
     }
 
     private void loadOut_ppDocument(EntityManager oldEm, EntityManager newEm) {
-        Query oldDocumentQuey = oldEm.createNativeQuery("select * from Out_pp /*where rownum<5*/ order by doc_date, id_pp");
+        Query oldDocumentQuey = oldEm.createNativeQuery(SELECT_OUT_PP);
         EntityTransaction transaction = newEm.getTransaction();
         transaction.begin();
         int i = 0;
@@ -106,14 +147,34 @@ public class Loader extends LoaderCore {
             if(docSumm!=null)
                 pay.setPaySum(((BigDecimal) docSumm).doubleValue());
             //3 PAYER_ID
+            String payerUnp = (String) attr[3];
+            if(payerUnp!=null){
+                pay.setPayer(newEm.find(Payer.class, payerUnp));
+            }
+
             //4 BANK4GET
             //5 BENEFICIARY
+            String benUnp = (String) attr[5];
+            if(benUnp!=null){
+                pay.setRecipient(newEm.find(Payer.class, benUnp));
+            }
+
             //6 PAY_TYPE_ID
+            String pTypeCode = (String) attr[6];
+            if(pTypeCode!=null){
+                pay.setPayType(newEm.find(PayType.class, pTypeCode));
+            }
             //7 PAY_TYPE_TEXT
+            pay.setPayNote((String) attr[7]);
             //8 OPER_DATE
             final Date operDate = getAsDate(attr[8]);
             pay.setApplyDate(operDate ==null? docDate: operDate);
             //9 BANK4PUT
+
+            newEm.merge(pay);
+            commit(newEm, transaction);
+            transaction.begin();
+
         }
     }
 

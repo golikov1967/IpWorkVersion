@@ -16,7 +16,7 @@
         <compiler.target>1.6</compiler.target>
         <shaversion>1.1.0</shaversion>
         <needle.version>2.2</needle.version>
-        <eclipselink.version>2.4.1</eclipselink.version>
+        <eclipselink.version>2.5.1</eclipselink.version>
         <svn.url>http://svnrep1/svn3/SoftIP/trunc/Software Developments</svn.url>
     </properties>
 
@@ -69,11 +69,11 @@
             <name>ip release repository</name>
             <url>http://scoas:8081/nexus/content/repositories/releases</url>
         </repository>
-        <snapshotRepository>
-            <id>nexus</id>
-            <name>ip snapshot repository</name>
-            <url>http://scoas:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
+        <!--<snapshotRepository>-->
+            <!--<id>nexus</id>-->
+            <!--<name>ip snapshot repository</name>-->
+            <!--<url>http://scoas:8081/nexus/content/repositories/snapshots</url>-->
+        <!--</snapshotRepository>-->
     </distributionManagement>
     <build>
         <plugins>

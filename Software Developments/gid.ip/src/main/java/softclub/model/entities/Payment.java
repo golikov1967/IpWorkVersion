@@ -22,9 +22,8 @@ public class Payment extends Document implements Serializable {
     private Date applyDate;
     private String payNote;
     private double paySum;
-    private String paySumString;
-    private Account payerAccount;
-    private Account recipientAccount;
+    private Payer payer;
+    private Payer recipient;
     private Integer sequenceNumber;
 
     public Payment() {
@@ -59,22 +58,17 @@ public class Payment extends Document implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PAYER_ACC_ID", referencedColumnName = "ACCOUNT_ID")
-    public Account getPayerAccount() {
-        return payerAccount;
+    @JoinColumn(name = "PAYER_UNP", referencedColumnName = "UNP")
+    public Payer getPayer() {
+        return payer;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RECIPIENT_ACC_ID", referencedColumnName = "ACCOUNT_ID")
-    public Account getRecipientAccount() {
-        return recipientAccount;
+    @JoinColumn(name = "RECIPIENT_UNP", referencedColumnName = "UNP")
+    public Payer getRecipient() {
+        return recipient;
     }
 
-
-    @Column(name = "PAY_SUM_STRING", length = 2000)
-    public String getPaySumString() {
-        return paySumString;
-    }
 
     @Column(name = "PAY_SUM")
     public double getPaySum() {
@@ -95,20 +89,12 @@ public class Payment extends Document implements Serializable {
         this.act = act;
     }
 
-    public void setPayerAccount(Account payerAccount) {
-        this.payerAccount = payerAccount;
-    }
-
-    public void setRecipientAccount(Account recipientAccount) {
-        this.recipientAccount = recipientAccount;
+    public void setRecipient(Payer recipient) {
+        this.recipient = recipient;
     }
 
     public void setApplyDate(Date applyDate) {
         this.applyDate = applyDate;
-    }
-
-    public void setPaySumString(String paySumString) {
-        this.paySumString = paySumString;
     }
 
     public void setPaySum(double paySum) {
@@ -144,4 +130,9 @@ public class Payment extends Document implements Serializable {
     public int hashCode() {
         return super.hashCode();
     }
+
+    public void setPayer(Payer payer) {
+        this.payer = payer;
+    }
+
 }

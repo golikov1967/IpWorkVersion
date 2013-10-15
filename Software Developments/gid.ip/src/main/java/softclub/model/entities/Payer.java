@@ -43,7 +43,7 @@ public class Payer extends VersionedEntity<String> {
     }
 
     @Id
-    @Column(length = 9)
+    @Column(length = 9, name = "UNP")
     @Override
     public String getId() {
         return UNP;

@@ -4,6 +4,7 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="NewModelIP" transaction-type="RESOURCE_LOCAL">
         <!--jta-data-source>jdbc/postgresDS</jta-data-source-->
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>softclub.model.entities.Account</class>
         <class>softclub.model.entities.Act</class>
         <class>softclub.model.entities.Bank</class>

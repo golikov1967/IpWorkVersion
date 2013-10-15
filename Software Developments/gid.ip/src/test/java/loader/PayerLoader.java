@@ -42,7 +42,7 @@ public class PayerLoader extends LoaderCore {
 
         //loadIn_ppDocument(oldEm, newEm);
         loadPayers(oldEm, newEm);
-        loadOut_ppDocument(oldEm, newEm);
+        //loadOut_ppDocument(oldEm, newEm);
     }
 
     private void loadPayers(EntityManager oldEm, EntityManager newEm) {

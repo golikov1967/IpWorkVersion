@@ -1,11 +1,6 @@
 package softclub.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @NamedQueries({ @NamedQuery(
@@ -14,12 +9,11 @@ import javax.persistence.Table;
 ) })
 @Inheritance
 @Table(name = "PAY_TYPE")
-public class PayType extends VersionedEntity<Long> {
+public class PayType extends VersionedEntity<String> {
 
     /**
      * Константа определения типа платежа
      */
-    @Column(length = 30)
     private String code;
 
     /**
@@ -27,7 +21,6 @@ public class PayType extends VersionedEntity<Long> {
      * Параметры:
      * {0} - NEXT_MONTH4DOC_DATE "январь 2009"
      */
-    @Column(length = 2000)
     private String note;
 
     private int payCode;
@@ -36,32 +29,36 @@ public class PayType extends VersionedEntity<Long> {
 
     public PayType() {}
 
+    @Column(length = 2000)
     public String getNote() {
         return note;
     }
 
-    public void setNote(String Note) {
-        this.note = Note;
-    }
-
-    public String getCode() {
+    @Column(length = 30, name = "CODE")
+    @Id
+    @Override
+    public String getId() {
         return code;
     }
 
-    public void setCode(String Code) {
-        this.code = Code;
+    public int getPayCode() {
+        return payCode;
     }
 
     public int getQueue() {
         return queue;
     }
 
+    public void setNote(String Note) {
+        this.note = Note;
+    }
+
     public void setQueue(int queue) {
         this.queue = queue;
     }
 
-    public int getPayCode() {
-        return payCode;
+    public void setId(String Code) {
+        this.code = Code;
     }
 
     public void setPayCode(int payCode) {
