@@ -39,6 +39,15 @@ public class Loader extends LoaderCore {
             "  where o.payer_id = p.payer_id(+)\n" +
             "  and o.beneficiary = b.payer_id(+)\n" +
             "  and o.pay_type_id = pt.pay_type_id(+)";
+    public static final int IN_DOC_NUM = 0;
+    public static final int IN_DOC_DATE = 1;
+    public static final int IN_DOC_SUM = 2;
+    public static final int IN_AKT_NUM = 3;
+    public static final int IN_AKT_DATE = 4;
+    public static final int IN_PAY_NOTE = 5;
+    public static final int IN_CONTRACT_NUM = 6;
+    public static final int IN_CONTRACT_DATE = 7;
+    public static final int IN_OPER_DATE = 10;
 
     @Test
     public void reloadData(){
@@ -176,31 +185,29 @@ public class Loader extends LoaderCore {
         int i = 0;
         for(Object o :oldDocumentQuey.getResultList()) {
             Object[] attr = (Object[]) o;
-            // DOC_NUM
-            final String docNumber = (String) attr[0];
-            // DOC_DATE
-            final Date docDate = getAsDate(attr[1]);
+
+            final String docNumber = (String) attr[IN_DOC_NUM];
+
+            final Date docDate = getAsDate(attr[IN_DOC_DATE]);
             Payment pay = findDoc(newEm, docNumber, docDate, new Payment());
-            // DOC_SUM
-            final Object docSumm = attr[2];
+            //
+            final Object docSumm = attr[IN_DOC_SUM];
             if(docSumm!=null)
             pay.setPaySum(((BigDecimal) docSumm).doubleValue());
-            // AKT_NUM
-            Act act = findDoc(newEm, (String) attr[3], getAsDate(attr[4]), new Act());
+            //
+            Act act = findDoc(newEm, (String) attr[IN_AKT_NUM], getAsDate(attr[IN_AKT_DATE]), new Act());
             pay.setAct(act);
 
-            //PAY_NOTE
-            pay.setPayNote((String)attr[5]);
+            //
+            pay.setPayNote((String)attr[IN_PAY_NOTE]);
 
             if(act!=null && act.getContract() == null){
-                //CONTRACT_NUM
-                //CONTRACT_DATE
-                act.setContract(findDoc(newEm, (String) attr[6], getAsDate(attr[7]), new Contract()));
+                //
+                //
+                act.setContract(findDoc(newEm, (String) attr[IN_CONTRACT_NUM], getAsDate(attr[IN_CONTRACT_DATE]), new Contract()));
             }
-            // REC_ID
-            //TODO: LETTER_DATE
-            //OPER_DATE
-            final Date operDate = getAsDate(attr[10]);
+            //
+            final Date operDate = getAsDate(attr[IN_OPER_DATE]);
             pay.setApplyDate(operDate ==null? docDate: operDate);
 //            document.ge
 
