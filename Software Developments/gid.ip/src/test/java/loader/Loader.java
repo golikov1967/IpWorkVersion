@@ -1,27 +1,17 @@
 package loader;
 
-import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
-import de.akquinet.jbosscc.needle.junit.DatabaseRule;
-import de.akquinet.jbosscc.needle.junit.NeedleRule;
 import loader.base.LoaderCore;
-import org.apache.log4j.Logger;
-import org.junit.Rule;
 import org.junit.Test;
-import softclub.model.SessionEJB;
-import softclub.model.SessionEJBBean;
 import softclub.model.entities.*;
 import softclub.model.entities.pk.DocumentId;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 
 /**
@@ -61,14 +51,14 @@ public class Loader extends LoaderCore {
 
         Query oldQ = oldEm.createNativeQuery("select USER from dual");
         String user = (String) oldQ.getSingleResult();
-        LOGGER.error("проверка прошла успешно user=" + user);
+        LOGGER.info("проверка прошла успешно user=" + user);
 
         Query newQ = newEm.createNativeQuery("select USER from dual");
         user = (String) newQ.getSingleResult();
-        LOGGER.error("проверка прошла успешно user=" + user);
+        LOGGER.info("проверка прошла успешно user=" + user);
 
         //загрузка приходных документов
-        //loadIn_ppDocument(oldEm, newEm);
+        loadIn_ppDocument(oldEm, newEm);
         //загрузка субьектов
         loadPayers(oldEm, newEm);
         //загрузка типов платежа

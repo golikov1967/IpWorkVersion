@@ -1,5 +1,4 @@
 import org.apache.log4j.Logger;
-import org.junit.Test;
 import softclub.model.entities.Document;
 
 import javax.persistence.*;
@@ -8,6 +7,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,25 +19,27 @@ import java.util.List;
  */
 public class TestModelNew {
     private static final Logger LOGGER = Logger.getLogger(TestModelNew.class);
-    private static final String PERSISTENCE_UNIT_NAME = "ModelJP";
+    private static final String PERSISTENCE_UNIT_NAME = "NewModelIP";
     private static EntityManagerFactory factory, oldFactory;
 
-    @Test
+    //@Test
     public void t1(){
 
-//        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-//        oldFactory = Persistence.createEntityManagerFactory("ModelOld");
-//        EntityManager em = factory.createEntityManager();
-//        EntityManager oldEm = oldFactory.createEntityManager();
-//        // Read the existing entries and write to console
-//        addTestDocument(oldEm, em);
-//
-//        List<Document> list = queryListObjects(em, Document.class);
-//        for (Document payment : list){
-//            LOGGER.info("p=" + payment.toString());
-//        }
-//
-//        em.close();
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = factory.createEntityManager();
+        assertNotNull(em);
+        oldFactory = Persistence.createEntityManagerFactory("OldModelIP");
+        EntityManager oldEm = oldFactory.createEntityManager();
+        assertNotNull(oldEm);
+        // Read the existing entries and write to console
+        addTestDocument(oldEm, em);
+
+        List<Document> list = queryListObjects(em, Document.class);
+        for (Document payment : list){
+            LOGGER.info("p=" + payment.toString());
+        }
+
+        em.close();
     }
 
     private void addTestDocument(EntityManager oldEm, EntityManager em) {

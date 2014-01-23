@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 
@@ -34,15 +35,15 @@ public class PayerLoader extends LoaderCore {
 
         Query oldQ = oldEm.createNativeQuery("select USER from dual");
         String user = (String) oldQ.getSingleResult();
-        LOGGER.error("проверка прошла успешно user=" + user);
+        assertEquals("GID", user);
 
         Query newQ = newEm.createNativeQuery("select USER from dual");
         user = (String) newQ.getSingleResult();
-        LOGGER.error("проверка прошла успешно user=" + user);
+        assertEquals("GIDPOST", user);
 
-        //loadIn_ppDocument(oldEm, newEm);
+        loadIn_ppDocument(oldEm, newEm);
         loadPayers(oldEm, newEm);
-        //loadOut_ppDocument(oldEm, newEm);
+        loadOut_ppDocument(oldEm, newEm);
     }
 
     private void loadPayers(EntityManager oldEm, EntityManager newEm) {
@@ -65,7 +66,7 @@ public class PayerLoader extends LoaderCore {
             payer.setId((String) attr[0]);
             payer.setName((String) attr[1]);
             payer.getAccounts().add(findAccount((String) attr[2]));
-            newEm.persist(payer);
+            newEm.merge(payer);
         }
     }
 
@@ -76,6 +77,7 @@ public class PayerLoader extends LoaderCore {
     private void loadOut_ppDocument(EntityManager oldEm, EntityManager newEm) {
         Query oldDocumentQuey = oldEm.createNativeQuery("select * from Out_pp /*where rownum<5*/ order by doc_date, id_pp");
         EntityTransaction transaction = newEm.getTransaction();
+        if(transaction.isActive()) transaction.commit();
         transaction.begin();
         int i = 0;
         for(Object o :oldDocumentQuey.getResultList()) {
@@ -90,6 +92,7 @@ public class PayerLoader extends LoaderCore {
             if(docSumm!=null)
                 pay.setPaySum(((BigDecimal) docSumm).doubleValue());
             //3 PAYER_ID
+
             //4 BANK4GET
             //5 BENEFICIARY
             //6 PAY_TYPE_ID
@@ -99,6 +102,7 @@ public class PayerLoader extends LoaderCore {
             pay.setApplyDate(operDate ==null? docDate: operDate);
             //9 BANK4PUT
         }
+        LOGGER.error("загрузка исходящих платежек прошла успешно, загружено " + oldDocumentQuey.getResultList().size() + " записей");
     }
 
 

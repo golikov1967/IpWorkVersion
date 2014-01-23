@@ -58,38 +58,38 @@
     </dependencies>
 
     <!--Управление релизами при помощи Maven-->
-    <scm>
-        <developerConnection>scm:svn:http://svnrep1/svn3/SoftIP/tags/IP-1.2.6</developerConnection>
-        <url>http://svnrep1/svn3/SoftIP/tags/IP-1.2.6</url>
-    </scm>
+    <!--<scm>-->
+        <!--<developerConnection>scm:svn:http://svnrep1/svn3/SoftIP/tags/IP-1.2.6</developerConnection>-->
+        <!--<url>http://svnrep1/svn3/SoftIP/tags/IP-1.2.6</url>-->
+    <!--</scm>-->
 
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>ip release repository</name>
-            <url>http://scoas:8081/nexus/content/repositories/releases</url>
-        </repository>
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>nexus</id>-->
+            <!--<name>ip release repository</name>-->
+            <!--<url>http://scoas:8081/nexus/content/repositories/releases</url>-->
+        <!--</repository>-->
         <!--<snapshotRepository>-->
             <!--<id>nexus</id>-->
             <!--<name>ip snapshot repository</name>-->
             <!--<url>http://scoas:8081/nexus/content/repositories/snapshots</url>-->
         <!--</snapshotRepository>-->
-    </distributionManagement>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <branchName>branch.ip.1</branchName>
-                    <tagBase>http://svnrep1/svn3/SoftIP/tags</tagBase>
-                    <branchBase>http://svnrep1/svn3/SoftIP/branches</branchBase>
-                    <preparationGoals>clean install</preparationGoals>
-                    <goals>deploy</goals>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <!--</distributionManagement>-->
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-release-plugin</artifactId>-->
+                <!--<version>2.3.1</version>-->
+                <!--<configuration>-->
+                    <!--<branchName>branch.ip.1</branchName>-->
+                    <!--<tagBase>http://svnrep1/svn3/SoftIP/tags</tagBase>-->
+                    <!--<branchBase>http://svnrep1/svn3/SoftIP/branches</branchBase>-->
+                    <!--<preparationGoals>clean install</preparationGoals>-->
+                    <!--<goals>deploy</goals>-->
+                    <!--<autoVersionSubmodules>true</autoVersionSubmodules>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
 </project>
