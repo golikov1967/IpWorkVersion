@@ -17,7 +17,7 @@ import javax.inject.Inject;
  * Time: 13:33
  * To change this template use File | Settings | File Templates.
  */
-public class LoaderCore {
+public class CoreIpModelTester {
     @Rule
     public DatabaseRule newDatabaseRule = new DatabaseRule("NewModelIP");
     @Rule
@@ -31,5 +31,5 @@ public class LoaderCore {
     @Inject
     protected javax.persistence.EntityManager newEm;
     //    Logger LOGGER = Logger.getRootLogger();
-    protected Logger LOGGER = Logger.getLogger("loader.Loader");
+    protected Logger LOGGER = Logger.getLogger("loader.IpModelTester");
 }
