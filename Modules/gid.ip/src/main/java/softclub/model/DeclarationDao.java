@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class DeclarationDao extends AbstractDao<Declaration, Long> {
 
     @EJB
-    PaymentDao payDao;
+    InputPaymentDao payDao;
 
     private static final String NOT_PARSED = "Не разобрано:";
 
@@ -68,18 +68,10 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         EasyDeclaration result = new EasyDeclaration();
 
         // взять сумму приходов за период
-        payDao.getInputSum4Date(iMonth, currYear);
+        final double inSumm = payDao.getInputSum4Date(iMonth, currYear);
 
         // вычесть сумму возвратов за период
-//        select qStr1 - NVL(sum(t.doc_sum), 0)
-//        into qStr1
-//        from out_pp t
-//        where t.pay_type_id =
-//                (select pt.pay_type_id
-//        from pay_types pt
-//        where pt.type_code = 'ERROR_PAY')
-//        and to_char(nvl(t.oper_date, t.doc_date), 'yyyy') = currYear
-//        and to_char(nvl(t.oper_date, t.doc_date), 'mm') <= cMonth; -- сумма возвратов начала года
+        final double minusSumm = payDao.getMinusSum4Date(iMonth, currYear);
 
         return result;
     }

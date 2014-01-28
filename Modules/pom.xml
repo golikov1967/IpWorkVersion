@@ -28,7 +28,7 @@
         <slf4j.version>1.7.2</slf4j.version>
         <javax.faces.version>2.2.4</javax.faces.version>
         <!--weblogic-->
-        <weblogic.plugin.version>10.3.4</weblogic.plugin.version>
+        <weblogic.plugin.version>12.1.2-0-0</weblogic.plugin.version>
         <weblogic.plugin.adminurl>t3://127.0.0.1:7001</weblogic.plugin.adminurl>
         <weblogic.plugin.user>weblogic</weblogic.plugin.user>
         <weblogic.plugin.password>weblogic1</weblogic.plugin.password>

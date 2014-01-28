@@ -141,7 +141,7 @@ public class IpModelTester extends CoreIpModelTester {
             final String docNumber = ((BigDecimal) attr[0]).toString();
             // DOC_DATE
             final Date docDate = getAsDate(attr[1]);
-            Payment pay = findDoc(newEm, docNumber, docDate, new Payment());
+            OutputPayment pay = findDoc(newEm, docNumber, docDate, new OutputPayment());
             // DOC_SUM
             final Object docSumm = attr[2];
             if(docSumm!=null)
@@ -190,7 +190,7 @@ public class IpModelTester extends CoreIpModelTester {
             final String docNumber = (String) attr[IN_DOC_NUM];
 
             final Date docDate = getAsDate(attr[IN_DOC_DATE]);
-            Payment pay = findDoc(newEm, docNumber, docDate, new Payment());
+            InputPayment pay = findDoc(newEm, docNumber, docDate, new InputPayment());
             //
             final Object docSumm = attr[IN_DOC_SUM];
             if(docSumm!=null)
