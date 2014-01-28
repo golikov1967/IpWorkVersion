@@ -4,7 +4,10 @@ import by.softclub.fos.model.dao.base.AbstractDao;
 import loader.entity.EasyDeclaration;
 import softclub.model.entities.Declaration;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -12,6 +15,9 @@ import java.util.logging.Logger;
 
 @Stateless(name = "SessionEJB", mappedName = "TestWS-ModelJP-SessionEJB")
 public class DeclarationDao extends AbstractDao<Declaration, Long> {
+
+    @EJB
+    PaymentDao payDao;
 
     private static final String NOT_PARSED = "Не разобрано:";
 
@@ -50,15 +56,48 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         Date calcDate = date.getTime();
 
         final int procent;
-        if (calcDate.after(getDate('01.01.2013', 'DD.MM.YYYY'))){
+        if (calcDate.after(getDate("01.01.2013", "DD.MM.YYYY"))){
             procent = 5;
-        } else if(calcDate.after(getDate('01.01.2012', 'DD.MM.YYYY'))){
+        } else if(calcDate.after(getDate("01.01.2012", "DD.MM.YYYY"))){
             procent = 7;
-        } else if(calcDate.after(getDate('01.01.2009', 'DD.MM.YYYY'))){
+        } else if(calcDate.after(getDate("01.01.2009", "DD.MM.YYYY"))){
             procent = 8;
         }else{
             procent = 10;
         }
+        EasyDeclaration result = new EasyDeclaration();
 
+        // взять сумму приходов за период
+//        select NVL(sum(t.doc_sum), 0)
+//        into qStr1
+//        from in_pp t
+//        where t.akt_num is not null
+//        and to_char(t.doc_date, 'yyyy') = currYear
+//        and to_char(nvl(t.oper_date, t.doc_date), 'mm') <= cMonth;
+
+        payDao.getInputSum4Date(iMonth, currYear);
+
+        // вычесть сумму возвратов за период
+//        select qStr1 - NVL(sum(t.doc_sum), 0)
+//        into qStr1
+//        from out_pp t
+//        where t.pay_type_id =
+//                (select pt.pay_type_id
+//        from pay_types pt
+//        where pt.type_code = 'ERROR_PAY')
+//        and to_char(nvl(t.oper_date, t.doc_date), 'yyyy') = currYear
+//        and to_char(nvl(t.oper_date, t.doc_date), 'mm') <= cMonth; -- сумма возвратов начала года
+
+        return result;
+    }
+
+    private Date getDate(String source, String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        try {
+            return sdf.parse(source);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

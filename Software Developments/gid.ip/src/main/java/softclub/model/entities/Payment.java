@@ -1,16 +1,14 @@
 package softclub.model.entities;
 
-import softclub.model.entities.Document;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@NamedQueries( { @NamedQuery(name = "Payment.findAll",
-                             query = "select o from Payment o ORDER BY o.applyDate, o.docDate"),
-                 @NamedQuery(name = "Payment.forPeriod",
-                             query = "select o from Payment o where o.applyDate between :begDay and :endDay ORDER BY o.applyDate, o.docDate") }) // o.applyDate = NULL and
+//@NamedQueries( { @NamedQuery(name = "Payment.findAll",
+//                             query = "select o from Payment o ORDER BY o.applyDate, o.docDate"),
+//                 @NamedQuery(name = "Payment.forPeriod",
+//                             query = "select o from Payment o where o.applyDate between :begDay and :endDay ORDER BY o.applyDate, o.docDate") }) // o.applyDate = NULL and
 @Inheritance
 @DiscriminatorValue("PAYMENT")
 @Table(name = "PAYMENT")

@@ -27,7 +27,7 @@ public abstract class AbstractDao<T extends BaseEntity<ID>, ID extends Serializa
     protected Class<T> type;
 
     @PersistenceContext(unitName = "ModelJP")
-    private EntityManager em;
+    protected EntityManager em;
 
     protected static final Logger DEBUG_LOGGER = Logger.getLogger("DEBUG_LOGGER");
 

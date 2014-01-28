@@ -1,6 +1,6 @@
 package softclub.model.entities;
 
-import softclub.model.entities.VersionedEntity;
+import by.softclub.fos.model.dao.base.BaseEntity;
 import softclub.model.entities.pk.DocumentId;
 
 import javax.persistence.*;
@@ -14,51 +14,40 @@ import java.util.Date;
 @DiscriminatorValue("Document")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "DOCUMENT")
-@IdClass(DocumentId.class)
-public class Document {
+public class Document implements BaseEntity<DocumentId> {
 
-    protected Date docDate;
-    protected String docNumber;
+    protected DocumentId id;
 
     public Document() {}
-    @Id
-    @Column(name   = "DOC_NUMBER", length = 15)
-    public String getDocNumber() {
-        return docNumber;
+
+    @Override
+    @EmbeddedId
+    public DocumentId getId() {
+        if(id==null){
+            id = new DocumentId();
+        }
+        return id;
     }
 
-    @Id
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "DOC_DATE")
-    public Date getDocDate() {
-        return docDate;
+    @Override
+    public void setId(DocumentId documentId) {
+        id = documentId;
     }
 
     public void setDocNumber(String docNumber) {
-        this.docNumber = docNumber;
+        getId().setDocNumber(docNumber);
     }
 
     public void setDocDate(Date docDate) {
-        this.docDate = docDate;
+        getId().setDocDate(docDate);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Document)) return false;
-
-        Document document = (Document) o;
-
-        if (!docDate.equals(document.docDate)) return false;
-        if (!docNumber.equals(document.docNumber)) return false;
-
-        return true;
+    public String getDocNumber() {
+        return getId().getDocNumber();
     }
 
-    @Override
-    public int hashCode() {
-        int result = docDate.hashCode();
-        result = 31 * result + docNumber.hashCode();
-        return result;
+    public Date getDocDate() {
+        return getId().getDocDate();
     }
+
 }
