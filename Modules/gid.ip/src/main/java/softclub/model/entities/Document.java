@@ -42,10 +42,15 @@ public class Document implements BaseEntity<DocumentId> {
         getId().setDocDate(docDate);
     }
 
+    @Column(name = "DOC_NUMBER")
+    @Basic
     public String getDocNumber() {
         return getId().getDocNumber();
     }
 
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "DOC_DATE")
+    @Basic
     public Date getDocDate() {
         return getId().getDocDate();
     }

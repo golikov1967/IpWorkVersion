@@ -68,13 +68,6 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         EasyDeclaration result = new EasyDeclaration();
 
         // взять сумму приходов за период
-//        select NVL(sum(t.doc_sum), 0)
-//        into qStr1
-//        from in_pp t
-//        where t.akt_num is not null
-//        and to_char(t.doc_date, 'yyyy') = currYear
-//        and to_char(nvl(t.oper_date, t.doc_date), 'mm') <= cMonth;
-
         payDao.getInputSum4Date(iMonth, currYear);
 
         // вычесть сумму возвратов за период

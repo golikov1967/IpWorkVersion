@@ -36,17 +36,19 @@
             <!--<property name="eclipselink.target-server" value="WebLogic 10"/>-->
             <!--"drop-and-create-tables", "create-tables" "create-or-extend-tables" "both" "none"-->
 
+            <property name="eclipselink.ddl-generation.output-mode" value="sql-script"/>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="javax.persistence.application-location" value="."/>
-            <property name="javax.persistence.ddl-generation.output-mode" value="both"/>
             <property name="javax.persistence.create-ddl-jdbc-file-name" value="ipCreate.sql"/>
             <property name="javax.persistence.drop-ddl-jdbc-file-name" value="ipDrop.sql"/>
 
-            <property name="javax.persistence.logging.file" value="persistence.log"/>
-            <property name="javax.persistence.logging.exceptions" value="true"/>
-            <property name="javax.persistence.logging.level" value="FINE"/>
-            <property name="javax.persistence.logging.logger" value="org.eclipse.persistence.logging.JavaLog"/>
+            <!--Логирование SQL-запросов: CONFIG-нет FINE-да -->
+            <property name="eclipselink.logging.logger" value="DefaultLogger"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
             <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.logging.thread" value="false"/>
+            <property name="eclipselink.logging.session" value="false"/>
+            <property name="eclipselink.logging.exceptions" value="true"/>
         </properties>
     </persistence-unit>
     <persistence-unit name="OldModelIP" transaction-type="RESOURCE_LOCAL">

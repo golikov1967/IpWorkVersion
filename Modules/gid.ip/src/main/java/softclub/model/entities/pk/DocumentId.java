@@ -12,19 +12,20 @@ import java.util.Date;
  */
 @Embeddable
 public class DocumentId implements Serializable {
+    //@Id
+    @Temporal(value = TemporalType.DATE)
+    @Column(name = "DOC_DATE")
     protected Date docDate;
 
+    //@Id
+    @Column(name   = "DOC_NUMBER", length = 15)
     protected String docNumber;
 
-    @Id
-    @Column(name   = "DOC_NUMBER", length = 15)
     public String getDocNumber() {
         return docNumber;
     }
 
-    @Id
     @Temporal(value = TemporalType.DATE)
-    @Column(name = "DOC_DATE")
     public Date getDocDate() {
         return docDate;
     }
