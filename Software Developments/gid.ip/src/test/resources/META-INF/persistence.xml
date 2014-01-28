@@ -50,6 +50,7 @@
         </properties>
     </persistence-unit>
     <persistence-unit name="OldModelIP" transaction-type="RESOURCE_LOCAL">
+        <class>loader.entity.EasyDeclaration</class>
         <!--jta-data-source>jdbc/postgresDS</jta-data-source-->
         <properties>
             <!--Oracle-->

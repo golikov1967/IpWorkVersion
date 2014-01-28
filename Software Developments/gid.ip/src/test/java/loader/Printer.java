@@ -8,5 +8,4 @@ import loader.base.CoreIpModelTester;
 public class Printer extends CoreIpModelTester {
     //TODO Реализовать тест печати платежек
     //TODO Реализовать тест печати декларации
-    //TODO Реализовать тест сверки сумм по декларациям старой и новой моделей
 }

@@ -1,12 +1,12 @@
 package softclub.model.entities;
 
+import by.softclub.fos.model.dao.base.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
-@NamedQueries( { @NamedQuery(name = "Declaration.findAll",
-                             query = "select o from Declaration o") })
 @Table(name = "DECLARATION")
-public class Declaration extends SuperDeclaration {
+public class Declaration extends SuperDeclaration implements BaseEntity<Long> {
 
 
     @OneToOne(fetch = FetchType.LAZY)
