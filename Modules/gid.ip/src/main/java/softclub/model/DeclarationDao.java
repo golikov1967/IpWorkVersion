@@ -3,21 +3,32 @@ package softclub.model;
 import by.softclub.fos.model.dao.base.AbstractDao;
 import loader.entity.EasyDeclaration;
 import softclub.model.entities.Declaration;
+import softclub.model.entities.Declaration_;
+import softclub.model.entities.OutputPayment;
+import softclub.model.entities.PayType;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Logger;
 
-@Stateless(name = "SessionEJB", mappedName = "TestWS-ModelJP-SessionEJB")
+@Stateless
 public class DeclarationDao extends AbstractDao<Declaration, Long> {
 
     @EJB
-    InputPaymentDao payDao;
+    public InputPaymentDao inputPaymentDao;
+
+    @EJB
+    public OutputPaymentDao outputPaymentDao;
 
     private static final String NOT_PARSED = "Не разобрано:";
 
@@ -36,24 +47,39 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
             begMonth = 0;
         }
 
-        EasyDeclaration atrs = getNewDeclAttrs(iMonth, begMonth, iYear);
+        Date date4Params = getDate4Params(iMonth, iYear);
+        Declaration result = findDeclaration(date4Params);
+        if(result==null){
+            EasyDeclaration atrs = getNewDeclAttrs(iMonth, begMonth, iYear);
 
-        return null;
+            result = new Declaration();
+
+            result.setNalog(atrs.getS5());
+            result.setTotalInput(atrs.getS2());
+            result.setTotalInputFromBeginYear(atrs.getS1());
+            result.setBeginDate(date4Params);
+            merge(result);
+        }
+
+
+        return result;
+    }
+
+    private Declaration findDeclaration(Date date4Params) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Declaration> criteriaQuery = cb.createQuery(Declaration.class);
+        Root<Declaration> root = criteriaQuery.from(type);
+
+        criteriaQuery.where(
+                cb.equal(root.get(Declaration_.beginDate), date4Params)
+        );
+        TypedQuery<Declaration> query = em.createQuery(criteriaQuery);
+        List<Declaration> resultList = query.setMaxResults(1).getResultList();
+        return resultList!=null && resultList.size()>0? resultList.get(0): null;
     }
 
     private EasyDeclaration getNewDeclAttrs(int iMonth, int begMonth, int currYear) {
-        Calendar date = new GregorianCalendar();
-        date.setTime(new Date());
-        date.set(Calendar.DAY_OF_MONTH, 1);
-        date.set(Calendar.HOUR_OF_DAY, 0);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.set(Calendar.MILLISECOND, 0);
-        if(currYear==0){
-            currYear = date.get(Calendar.YEAR);
-        }
-        date.set(Calendar.MONTH, iMonth);
-        Date calcDate = date.getTime();
+        Date calcDate = getDate4Params(iMonth, currYear);
 
         final int procent;
         if (calcDate.after(getDate("01.01.2013", "DD.MM.YYYY"))){
@@ -68,12 +94,46 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         EasyDeclaration result = new EasyDeclaration();
 
         // взять сумму приходов за период
-        final double inSumm = payDao.getInputSum4Date(iMonth, currYear);
+        final double inSumm = inputPaymentDao.getTestSum4Date(currYear, 0, iMonth);
 
         // вычесть сумму возвратов за период
-        final double minusSumm = payDao.getMinusSum4Date(iMonth, currYear);
+        final double minusSumm = outputPaymentDao.getMinusSum4Date(iMonth, currYear);
+        result.setS1(inSumm - minusSumm);
+
+        // налоговая база ВСЕГО - (сумма поступлений за период)
+        result.setS2(inputPaymentDao.getInputSum4Date(currYear, begMonth, iMonth));
+
+        // налога по текущей ставке
+        result.setS2_1(result.getS2());
+
+        // сумма налога по расчету
+        result.setS3(result.getS2_1() / 100 * procent);
+
+        if(iMonth>1){
+            final Double s4 = getNewDeclAttrs(iMonth>1? iMonth-1: 12, begMonth, iMonth>1? currYear: currYear-1).getS3();
+            result.setS4((s4==null)? 0: s4);
+
+            result.setS5(result.getS3() - result.getS4());
+        } else {
+            result.setS4(0);
+            result.setS5(result.getS3());
+        }
+
 
         return result;
+    }
+
+    private Date getDate4Params(int iMonth, int currYear) {
+        Calendar date = new GregorianCalendar();
+        date.setTime(new Date());
+        date.set(Calendar.DAY_OF_MONTH, 1);
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        date.set(Calendar.YEAR, currYear);
+        date.set(Calendar.MONTH, iMonth);
+        return date.getTime();
     }
 
     private Date getDate(String source, String pattern) {

@@ -38,7 +38,6 @@ public class SuperDeclaration extends VersionedEntity<Long> {
 
     public void setTotalInput(double totalInput) {
         this.totalInput = totalInput;
-        this.nalog = this.totalInput / 100 * 8;
     }
 
     public void setBeginDate(Date beginDate) {
@@ -50,6 +49,6 @@ public class SuperDeclaration extends VersionedEntity<Long> {
     }
 
     public void setNalog(double nalog) {
-        //this.nalog = nalog;
+        this.nalog = nalog;
     }
 }

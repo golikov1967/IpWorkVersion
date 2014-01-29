@@ -25,7 +25,7 @@ public class SessionEJBBean implements SessionEJB {
 
     private static final Logger LOGGER = Logger.getAnonymousLogger();
 
-    @PersistenceContext(unitName = "ModelJP")
+    @PersistenceContext(unitName = "NewModelIP")
     private EntityManager em;
 
     public SessionEJBBean() {

@@ -26,8 +26,13 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
         super(InputPayment.class);
     }
 
+    public Double getTestSum4Date(int currYear, int begMonth, int endMonth) {
+        return getInputSum4Date(currYear, begMonth, endMonth);
+    }
+
+
     /**
-     * @param iMonth
+     * @param endMonth
      * @param currYear
      * @return select NVL(sum(t.doc_sum), 0)
      * into qStr1
@@ -36,7 +41,7 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
      * and to_char(t.doc_date, 'yyyy') = currYear
      * and to_char(nvl(t.oper_date, t.doc_date), 'mm') <= cMonth;
      */
-    public Double getInputSum4Date(int iMonth, int currYear) {
+    public Double getInputSum4Date(int currYear, int begMonth, int endMonth) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Double> criteriaQuery = cb.createQuery(Double.class);
         Root<InputPayment> root = criteriaQuery.from(type);
@@ -51,6 +56,21 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
                                         root.get(Payment_.docDate), cb.literal("yyyy")),
                                 Integer.toString(currYear)
                         ),
+                        cb.greaterThan(
+                                cb.function(
+                                        "to_number",
+                                        Integer.class,
+                                        cb.function(
+                                                "to_char",
+                                                String.class,
+                                                cb.function(
+                                                        "nvl",
+                                                        Date.class,
+                                                        root.get(Payment_.applyDate), root.get(Payment_.docDate)),
+                                                cb.literal("mm"))
+                                ),
+                                begMonth
+                        ),
                         cb.lessThanOrEqualTo(
                                 cb.function(
                                         "to_number",
@@ -64,7 +84,7 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
                                                         root.get(Payment_.applyDate), root.get(Payment_.docDate)),
                                                 cb.literal("mm"))
                                 ),
-                                iMonth
+                                endMonth
                         )
                 )
         );
@@ -74,22 +94,5 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
         Double result = query.getSingleResult();
 
         return result;
-    }
-
-    /**
-     * @param iMonth
-     * @param currYear
-     * @return select qStr1 - NVL(sum(t.doc_sum), 0)
-     * into qStr1
-     * from out_pp t
-     * where t.pay_type_id =
-     * (select pt.pay_type_id
-     * from pay_types pt
-     * where pt.type_code = 'ERROR_PAY')
-     * and to_char(nvl(t.oper_date, t.doc_date), 'yyyy') = currYear
-     * and to_char(nvl(t.oper_date, t.doc_date), 'mm') <= cMonth; -- сумма возвратов начала года
-     */
-    public double getMinusSum4Date(int iMonth, int currYear) {
-        return 0;
     }
 }

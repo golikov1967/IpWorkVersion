@@ -21,10 +21,10 @@ public class InputPaymentDaoTest extends CoreIpModelTester {
 
     @Test
     public void testGetInputSum4Date() throws Exception {
-        Double r = inputPaymentDao.getInputSum4Date(8,2010);
+        Double r = inputPaymentDao.getInputSum4Date(2008, 0, 1);
         assertNotNull(r);
 
-        r = outputPaymentDao.getMinusSum4Date(8,2010);
+        r = outputPaymentDao.getMinusSum4Date(1,2008);
         assertNotNull(r);
     }
 }
