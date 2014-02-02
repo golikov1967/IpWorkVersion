@@ -1,11 +1,8 @@
 package softclub.model;
 
 import by.softclub.fos.model.dao.base.AbstractDao;
-import loader.entity.EasyDeclaration;
 import softclub.model.entities.Declaration;
 import softclub.model.entities.Declaration_;
-import softclub.model.entities.OutputPayment;
-import softclub.model.entities.PayType;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -39,25 +36,18 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         super(Declaration.class);
     }
 
-    public Declaration calcDeclaration(int iYear, int iMonth) {
+    public Declaration calcDeclaration(int iYear, int iMonth, Declaration prev) {
         final int begMonth;
-        if(iYear == 2007){
+        if (iYear == 2007) {
             begMonth = 6;
-        }else{
+        } else {
             begMonth = 0;
         }
 
         Date date4Params = getDate4Params(iMonth, iYear);
         Declaration result = findDeclaration(date4Params);
-        if(result==null){
-            EasyDeclaration atrs = getNewDeclAttrs(iMonth, begMonth, iYear);
-
-            result = new Declaration();
-
-            result.setNalog(atrs.getS5());
-            result.setTotalInput(atrs.getS2());
-            result.setTotalInputFromBeginYear(atrs.getS1());
-            result.setBeginDate(date4Params);
+        if (result == null) {
+            result = getNewDeclAttrs(iMonth, begMonth, iYear, prev);
             merge(result);
         }
 
@@ -65,7 +55,7 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         return result;
     }
 
-    private Declaration findDeclaration(Date date4Params) {
+    public Declaration findDeclaration(Date date4Params) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Declaration> criteriaQuery = cb.createQuery(Declaration.class);
         Root<Declaration> root = criteriaQuery.from(type);
@@ -75,30 +65,30 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         );
         TypedQuery<Declaration> query = em.createQuery(criteriaQuery);
         List<Declaration> resultList = query.setMaxResults(1).getResultList();
-        return resultList!=null && resultList.size()>0? resultList.get(0): null;
+        return resultList != null && resultList.size() > 0 ? resultList.get(0) : null;
     }
 
-    private EasyDeclaration getNewDeclAttrs(int iMonth, int begMonth, int currYear) {
+    private Declaration getNewDeclAttrs(int iMonth, int begMonth, int currYear, Declaration prev) {
         Date calcDate = getDate4Params(iMonth, currYear);
 
         final int procent;
-        if (calcDate.after(getDate("01.01.2013", "DD.MM.YYYY"))){
+        if (calcDate.after(getDate("01.01.2013", "DD.MM.YYYY"))) {
             procent = 5;
-        } else if(calcDate.after(getDate("01.01.2012", "DD.MM.YYYY"))){
+        } else if (calcDate.after(getDate("01.01.2012", "DD.MM.YYYY"))) {
             procent = 7;
-        } else if(calcDate.after(getDate("01.01.2009", "DD.MM.YYYY"))){
+        } else if (calcDate.after(getDate("01.01.2009", "DD.MM.YYYY"))) {
             procent = 8;
-        }else{
+        } else {
             procent = 10;
         }
-        EasyDeclaration result = new EasyDeclaration();
-
+        Declaration result = new Declaration();
+        result.setBeginDate(calcDate);
         // взять сумму приходов за период
         final double inSumm = inputPaymentDao.getTestSum4Date(currYear, 0, iMonth);
 
         // вычесть сумму возвратов за период
         final double minusSumm = outputPaymentDao.getMinusSum4Date(iMonth, currYear);
-        result.setS1(inSumm - minusSumm);
+        result.setTotalInputYear(inSumm - minusSumm);
 
         // налоговая база ВСЕГО - (сумма поступлений за период)
         result.setS2(inputPaymentDao.getInputSum4Date(currYear, begMonth, iMonth));
@@ -109,21 +99,16 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         // сумма налога по расчету
         result.setS3(result.getS2_1() / 100 * procent);
 
-        if(iMonth>1){
-            final Double s4 = getNewDeclAttrs(iMonth>1? iMonth-1: 12, begMonth, iMonth>1? currYear: currYear-1).getS3();
-            result.setS4((s4==null)? 0: s4);
+        result.setS4(prev.getS3());
 
-            result.setS5(result.getS3() - result.getS4());
-        } else {
-            result.setS4(0);
-            result.setS5(result.getS3());
-        }
+        result.setNalog(result.getS3() - result.getS4());
+
 
 
         return result;
     }
 
-    private Date getDate4Params(int iMonth, int currYear) {
+    public Date getDate4Params(int iMonth, int currYear) {
         Calendar date = new GregorianCalendar();
         date.setTime(new Date());
         date.set(Calendar.DAY_OF_MONTH, 1);
@@ -132,7 +117,7 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
         date.set(Calendar.YEAR, currYear);
-        date.set(Calendar.MONTH, iMonth);
+        date.set(Calendar.MONTH, iMonth - 1);
         return date.getTime();
     }
 

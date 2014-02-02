@@ -3,7 +3,6 @@ package loader;
 import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
 import de.akquinet.jbosscc.needle.junit.DatabaseRule;
 import de.akquinet.jbosscc.needle.junit.NeedleRule;
-import loader.base.CoreIpModelTester;
 import loader.entity.EasyDeclaration;
 import org.apache.log4j.Logger;
 import org.junit.Rule;
@@ -57,9 +56,10 @@ public class DeclarationTester{
     public void declarationOneTest(){
         declDao.inputPaymentDao = inputPaymentDao;
         declDao.outputPaymentDao = outputPaymentDao;
+        Declaration old = declDao.findDeclaration(declDao.getDate4Params(11,2008));
         newEm.getTransaction().begin();
-        Declaration newDecl = declDao.calcDeclaration(2008, 1);
-        assertEquals(2960000, newDecl.getTotalInputFromBeginYear(), 1);
+        Declaration newDecl = declDao.calcDeclaration(2008, 12, old);
+        assertEquals(2960000, newDecl.getTotalInputYear(), 1);
         newEm.getTransaction().commit();
     }
 
@@ -75,9 +75,14 @@ public class DeclarationTester{
 
         List<EasyDeclaration> oldList = oldEm.createNativeQuery(DECLARATION_SQL, EasyDeclaration.class).getResultList();
         assertNotNull(oldList);
+        Declaration oldDecl = new Declaration();
         for (EasyDeclaration old: oldList) {
-            Declaration newDecl = declDao.calcDeclaration(old.getYear(), old.getMonth());
-            assertEquals(newDecl.getNalog(), old.getS5(), 0.01);
+            Declaration newDecl = declDao.calcDeclaration(old.getYear(), old.getMonth(), oldDecl);
+            newEm.getTransaction().begin();
+            newEm.merge(newDecl);
+            assertEquals(old.getS5(), newDecl.getNalog(), 0.01);
+            newEm.getTransaction().commit();
+            oldDecl = old.getMonth()==12? new Declaration(): newDecl;
         }
         //Declaration decl = declDao.calculate();
         //12-2008

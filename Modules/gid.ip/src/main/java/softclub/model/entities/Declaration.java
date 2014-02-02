@@ -24,8 +24,8 @@ public class Declaration extends SuperDeclaration implements BaseEntity<Long> {
     public void setPrev(SuperDeclaration prev) {
         if (this.prev != prev) {
             this.prev = prev;
-            this.setTotalInputFromBeginYear(prev.getTotalInputFromBeginYear() +
-                                            prev.getTotalInput());
+            this.setTotalInputYear(prev.getTotalInputYear() +
+                                            prev.getS2());
         }
     }
 
@@ -36,8 +36,8 @@ public class Declaration extends SuperDeclaration implements BaseEntity<Long> {
     public void setQuartal(SuperDeclaration quartal) {
         if (this.quartal != quartal) {
             this.quartal = quartal;
-            this.quartal.setTotalInput(this.quartal.getTotalInput() +
-                                       this.getTotalInput());
+            this.quartal.setS2(this.quartal.getS2() +
+                                       this.getS2());
         }
     }
 

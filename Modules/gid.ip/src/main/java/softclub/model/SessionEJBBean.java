@@ -333,13 +333,13 @@ public class SessionEJBBean implements SessionEJB {
         if (!d.equals(p.getDeclaration())) {
             Declaration old = p.getDeclaration();
 
-            d.setTotalInput(d.getTotalInput() + p.getPaySum());
+            d.setS2(d.getS2() + p.getPaySum());
             if (d.getPrev() != null) {
-                d.setTotalInputFromBeginYear(d.getPrev().getTotalInputFromBeginYear() +
-                                             d.getPrev().getTotalInput());
+                d.setTotalInputYear(d.getPrev().getTotalInputYear() +
+                                             d.getPrev().getS2());
             }
             if (old != null) {
-                old.setTotalInput(old.getTotalInput() - p.getPaySum());
+                old.setS2(old.getS2() - p.getPaySum());
                 old = em.merge(old);
             }
         }

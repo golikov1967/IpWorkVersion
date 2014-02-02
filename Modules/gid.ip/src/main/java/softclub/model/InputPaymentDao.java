@@ -2,6 +2,7 @@ package softclub.model;
 
 import by.softclub.fos.model.dao.base.AbstractDao;
 import softclub.model.entities.InputPayment;
+import softclub.model.entities.InputPayment_;
 import softclub.model.entities.Payment;
 import softclub.model.entities.Payment_;
 import softclub.model.entities.pk.DocumentId;
@@ -49,11 +50,12 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
 
         criteriaQuery.where(
                 cb.and(
+                        cb.isNotNull(root.get(InputPayment_.act)),
                         cb.equal(
                                 cb.function(
                                         "to_char",
                                         String.class,
-                                        root.get(Payment_.docDate), cb.literal("yyyy")),
+                                        root.get(InputPayment_.docDate), cb.literal("yyyy")),
                                 Integer.toString(currYear)
                         ),
                         cb.greaterThan(
@@ -93,6 +95,6 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
         TypedQuery<Double> query = em.createQuery(criteriaQuery);
         Double result = query.getSingleResult();
 
-        return result;
+        return result==null? 0d: result;
     }
 }

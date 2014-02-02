@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="525712531">
-    <data-source source="LOCAL" name="Oracle - SCKASSA@sc-oracle2.scx" uuid="3bfa8e35-1746-409a-91cd-bff9aec22b2b">
+  <component name="DataSourceManagerImpl" format="xml" hash="947872443">
+    <data-source source="LOCAL" name="GID" uuid="4bfa8e35-1746-409a-91cd-bff9aec22b2b">
       <driver-ref>oracle</driver-ref>
       <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
       <jdbc-url>jdbc:oracle:thin:@//sc-oracle2.scx:1521/SCKASSA</jdbc-url>
-      <user-name>scccr</user-name>
-      <user-password>dfd9dfc9dfc9dfc9dfd8</user-password>
-      <schema-pattern>*.GID *.GIDPOST</schema-pattern>
+      <user-name>gid</user-name>
+      <user-password>dfc8dfcfdfc6df9ddf9cdf93</user-password>
+      <schema-pattern>*.GID</schema-pattern>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="GIDPOST" uuid="3bfa8e35-1746-409a-91cd-bff9aec22b2b">
+      <driver-ref>oracle</driver-ref>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//sc-oracle2.scx:1521/SCKASSA</jdbc-url>
+      <user-name>GIDPOST</user-name>
+      <user-password>dfc8dfcfdfc6df9ddf9cdf93</user-password>
+      <schema-pattern>*.GIDPOST</schema-pattern>
       <libraries />
     </data-source>
   </component>
