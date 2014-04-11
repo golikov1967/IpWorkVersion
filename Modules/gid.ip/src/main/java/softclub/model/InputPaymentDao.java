@@ -3,9 +3,9 @@ package softclub.model;
 import by.softclub.fos.model.dao.base.AbstractDao;
 import softclub.model.entities.InputPayment;
 import softclub.model.entities.InputPayment_;
-import softclub.model.entities.Payment;
 import softclub.model.entities.Payment_;
 import softclub.model.entities.pk.DocumentId;
+import softclub.model.entities.pk.DocumentId_;
 
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
@@ -55,7 +55,7 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
                                 cb.function(
                                         "to_char",
                                         String.class,
-                                        root.get(InputPayment_.docDate), cb.literal("yyyy")),
+                                        root.get(InputPayment_.id).get(DocumentId_.docDate), cb.literal("yyyy")),
                                 Integer.toString(currYear)
                         ),
                         cb.greaterThan(
@@ -68,7 +68,7 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
                                                 cb.function(
                                                         "nvl",
                                                         Date.class,
-                                                        root.get(Payment_.applyDate), root.get(Payment_.docDate)),
+                                                        root.get(Payment_.applyDate), root.get(Payment_.id).get(DocumentId_.docDate)),
                                                 cb.literal("mm"))
                                 ),
                                 begMonth
@@ -83,7 +83,7 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
                                                 cb.function(
                                                         "nvl",
                                                         Date.class,
-                                                        root.get(Payment_.applyDate), root.get(Payment_.docDate)),
+                                                        root.get(Payment_.applyDate), root.get(Payment_.id).get(DocumentId_.docDate)),
                                                 cb.literal("mm"))
                                 ),
                                 endMonth

@@ -1,18 +1,17 @@
 package softclub.model.entities;
 
-import softclub.model.SessionEJB;
+import softclub.model.SessionEJBBean;
 
-import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "ACT_WRITER")
+//@Table(name = "ACT_WRITER")
 public class ActWriter extends Thread {
 
     Payment payment;
 
-    SessionEJB sessionBean;
+    SessionEJBBean sessionBean;
 
-    public ActWriter(String name, Payment payment, SessionEJB sessionBean) {
+    public ActWriter(String name, Payment payment, SessionEJBBean sessionBean) {
         super(name);
         this.sessionBean = sessionBean;
         this.payment     = payment;

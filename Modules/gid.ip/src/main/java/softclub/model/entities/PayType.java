@@ -9,6 +9,7 @@ import javax.persistence.*;
 ) })
 @Inheritance
 @Table(name = "PAY_TYPE")
+@Access(value = AccessType.PROPERTY)
 public class PayType extends VersionedEntity<String> {
 
     /**

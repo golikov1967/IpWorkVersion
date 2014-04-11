@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "DECLARATION")
+@Access(value = AccessType.PROPERTY)
 public class Declaration extends SuperDeclaration implements BaseEntity<Long> {
 
 

@@ -5,23 +5,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-//@NamedQueries( { @NamedQuery(name = "Payment.findAll",
-//                             query = "select o from Payment o ORDER BY o.applyDate, o.docDate"),
-//                 @NamedQuery(name = "Payment.forPeriod",
-//                             query = "select o from Payment o where o.applyDate between :begDay and :endDay ORDER BY o.applyDate, o.docDate") }) // o.applyDate = NULL and
-@Inheritance
-@DiscriminatorValue("PAYMENT")
-@Table(name = "PAYMENT")
+@DiscriminatorValue("Payment")
+@Access(value = AccessType.PROPERTY)
 public class Payment extends Document implements Serializable {
 
-    private Act act;
     private PayType payType;
     private Declaration declaration;
     private Date applyDate;
     private String payNote;
     private double paySum;
     private Payer payer;
-    private Payer recipient;
     private Integer sequenceNumber;
 
     public Payment() {
@@ -32,21 +25,10 @@ public class Payment extends Document implements Serializable {
         return payType;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = { CascadeType.ALL })
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DECLARATION_ID")
     public Declaration getDeclaration() {
         return declaration;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = { CascadeType.ALL })
-    @JoinColumns({
-            @JoinColumn(name = "ACT_DATE", referencedColumnName = "DOC_DATE"),
-            @JoinColumn(name = "ACT_NUMBER", referencedColumnName = "DOC_NUMBER")
-    })
-    public Act getAct() {
-        return act;
     }
 
     @Temporal(value = TemporalType.DATE)
@@ -61,17 +43,11 @@ public class Payment extends Document implements Serializable {
         return payer;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RECIPIENT_UNP", referencedColumnName = "UNP")
-    public Payer getRecipient() {
-        return recipient;
-    }
-
-
     @Column(name = "PAY_SUM")
     public double getPaySum() {
         return paySum;
     }
+
 
     @Column(name = "SEQUENCE_NUMBER")
     public Integer getSequenceNumber() {
@@ -83,8 +59,27 @@ public class Payment extends Document implements Serializable {
         return payNote;
     }
 
+    private Act act;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "ACT_DATE", referencedColumnName = "DOC_DATE"),
+            @JoinColumn(name = "ACT_NUMBER", referencedColumnName = "DOC_NUMBER")
+    })
+    public Act getAct() {
+        return act;
+    }
+
     public void setAct(Act act) {
         this.act = act;
+    }
+
+    private Payer recipient;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RECIPIENT_UNP", referencedColumnName = "UNP")
+    public Payer getRecipient() {
+        return recipient;
     }
 
     public void setRecipient(Payer recipient) {

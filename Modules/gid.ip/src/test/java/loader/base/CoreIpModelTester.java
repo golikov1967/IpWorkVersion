@@ -5,7 +5,6 @@ import de.akquinet.jbosscc.needle.junit.DatabaseRule;
 import de.akquinet.jbosscc.needle.junit.NeedleRule;
 import org.apache.log4j.Logger;
 import org.junit.Rule;
-import softclub.model.SessionEJB;
 import softclub.model.SessionEJBBean;
 
 import javax.inject.Inject;
@@ -27,7 +26,7 @@ public class CoreIpModelTester {
     @Rule
     public NeedleRule oldNeedleRule = new NeedleRule(oldDatabaseRule);
     @ObjectUnderTest(implementation = SessionEJBBean.class)
-    protected SessionEJB newModel;
+    protected SessionEJBBean newModel;
     @Inject
     protected javax.persistence.EntityManager newEm;
     //    Logger LOGGER = Logger.getRootLogger();

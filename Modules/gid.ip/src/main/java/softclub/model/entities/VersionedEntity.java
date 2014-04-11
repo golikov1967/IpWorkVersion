@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @author Голиков Игорь (gid)
  */
 @MappedSuperclass
+@Access(value = AccessType.PROPERTY)
 public abstract class VersionedEntity<I extends Serializable> implements Serializable {
 
     private int version = 0;

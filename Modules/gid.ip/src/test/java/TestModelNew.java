@@ -1,5 +1,6 @@
 import org.apache.log4j.Logger;
 import softclub.model.entities.Document;
+import softclub.model.entities.pk.DocumentId;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -49,8 +50,13 @@ public class TestModelNew {
         for(Object o :oldDocumentQuey.getResultList()) {
             Object[] attr = (Object[]) o;
             Document document = new Document();
-            document.setDocNumber((String) attr[0]);
-            document.setDocDate(new Date(((java.sql.Timestamp) attr[1]) .getTime()));
+
+            document.setId(
+                    new DocumentId(
+                            new Date(((java.sql.Timestamp) attr[1]) .getTime()),
+                            (String) attr[0]
+                    )
+            );
 //            document.ge
 
             em.persist(document);

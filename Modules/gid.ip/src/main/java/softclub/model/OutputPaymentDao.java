@@ -4,8 +4,8 @@ import by.softclub.fos.model.dao.base.AbstractDao;
 import softclub.model.entities.OutputPayment;
 import softclub.model.entities.OutputPayment_;
 import softclub.model.entities.PayType;
-import softclub.model.entities.PayType_;
 import softclub.model.entities.pk.DocumentId;
+import softclub.model.entities.pk.DocumentId_;
 
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
@@ -56,7 +56,7 @@ public class OutputPaymentDao extends AbstractDao<OutputPayment, DocumentId> {
                                 cb.function(
                                         "to_char",
                                         String.class,
-                                        root.get(OutputPayment_.docDate), cb.literal("yyyy")),
+                                        root.get(OutputPayment_.id).get(DocumentId_.docDate), cb.literal("yyyy")),
                                 Integer.toString(currYear)
                         ),
                         cb.lessThanOrEqualTo(
@@ -69,7 +69,7 @@ public class OutputPaymentDao extends AbstractDao<OutputPayment, DocumentId> {
                                                 cb.function(
                                                         "nvl",
                                                         Date.class,
-                                                        root.get(OutputPayment_.applyDate), root.get(OutputPayment_.docDate)),
+                                                        root.get(OutputPayment_.applyDate), root.get(OutputPayment_.id).get(DocumentId_.docDate)),
                                                 cb.literal("mm"))
                                 ),
                                 iMonth

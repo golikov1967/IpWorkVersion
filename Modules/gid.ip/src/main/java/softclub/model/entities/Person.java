@@ -9,6 +9,7 @@ import javax.persistence.*;
 ) })
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "PERSON")
+@Access(value = AccessType.PROPERTY)
 public class Person extends VersionedEntity<Long> {
 
     @Column(name = "first_Name")

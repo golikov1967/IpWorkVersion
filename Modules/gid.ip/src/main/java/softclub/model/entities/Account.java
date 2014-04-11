@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance
 @Table(name = "ACCOUNT")
+@Access(value = AccessType.PROPERTY)
 public class Account extends VersionedEntity<Long> {
     @Id
     @Column(name = "ACCOUNT_NUMBER", nullable = false)

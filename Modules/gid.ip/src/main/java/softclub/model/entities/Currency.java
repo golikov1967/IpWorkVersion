@@ -9,6 +9,7 @@ import javax.persistence.*;
 ) })
 @Inheritance
 @Table(name = "CURRENCY")
+@Access(value = AccessType.PROPERTY)
 public class Currency extends VersionedEntity<Long> {
 
     @Column(

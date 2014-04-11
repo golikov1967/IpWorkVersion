@@ -37,7 +37,7 @@
             <!--<property name="eclipselink.target-server" value="WebLogic 10"/>-->
             <!--"drop-and-create-tables", "create-tables" "create-or-extend-tables" "both" "sql-script"-->
 
-            <property name="eclipselink.ddl-generation.output-mode" value="sql-script"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="javax.persistence.application-location" value="."/>
             <property name="javax.persistence.create-ddl-jdbc-file-name" value="ipCreate.sql"/>

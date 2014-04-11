@@ -8,6 +8,7 @@ import java.util.Date;
 //@NamedQueries( { @NamedQuery(name = "SuperDeclaration.findAll",
 //                             query = "select o from SuperDeclaration o") })
 
+@Access(value = AccessType.PROPERTY)
 public class SuperDeclaration extends VersionedEntity<Long> {
 
     protected Date beginDate;

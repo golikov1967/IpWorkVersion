@@ -3,17 +3,18 @@ package softclub.model.entities;
 import by.softclub.fos.model.dao.base.BaseEntity;
 import softclub.model.entities.pk.DocumentId;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
-//@NamedQueries({ @NamedQuery(
-//    name  = "Document.findAll",
-//    query = "select o from Document o"
-//) })
 @DiscriminatorValue("Document")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name = "DOCUMENT")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Access(value = AccessType.PROPERTY)
 public class Document implements BaseEntity<DocumentId> {
 
     protected DocumentId id;
@@ -32,27 +33,6 @@ public class Document implements BaseEntity<DocumentId> {
     @Override
     public void setId(DocumentId documentId) {
         id = documentId;
-    }
-
-    public void setDocNumber(String docNumber) {
-        getId().setDocNumber(docNumber);
-    }
-
-    public void setDocDate(Date docDate) {
-        getId().setDocDate(docDate);
-    }
-
-    @Column(name = "DOC_NUMBER")
-    @Basic
-    public String getDocNumber() {
-        return getId().getDocNumber();
-    }
-
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "DOC_DATE")
-    @Basic
-    public Date getDocDate() {
-        return getId().getDocDate();
     }
 
 }

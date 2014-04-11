@@ -50,7 +50,11 @@ public class IpModelTester extends CoreIpModelTester {
     public static final int IN_CONTRACT_DATE = 7;
     public static final int IN_OPER_DATE = 10;
 
+
     @Test
+    /**
+     * TODO: Здесь главный тест модели
+     * */
     public void reloadData(){
         EntityManager oldEm = oldDatabaseRule.getEntityManager();
         //EntityManager newEm = newDatabaseRule.getEntityManager();
@@ -84,8 +88,13 @@ public class IpModelTester extends CoreIpModelTester {
         int i = 0;
         for(Object o :payTypesQuery.getResultList()) {
             Object[] attr = (Object[]) o;
-            final PayType payType = new PayType();
-            payType.setId((String) attr[0]);
+            String code = (String) attr[0];
+
+            PayType payType = newEm.find(PayType.class, code);
+            if(payType==null){
+                payType = new PayType();
+                payType.setId(code);
+            }
             payType.setNote((String) attr[1]);
             payType.setQueue(((BigDecimal) attr[2]).intValue());
             BigDecimal payCode = (BigDecimal) attr[3];
@@ -108,15 +117,18 @@ public class IpModelTester extends CoreIpModelTester {
         int i = 0;
         for(Object o :oldDocumentQuey.getResultList()) {
             Object[] attr = (Object[]) o;
+            String unp = (String) attr[0];
             String bankCode = (String) attr[3];
-            final Payer payer;
-            if(bankCode!=null){
-                payer = new Bank();
-                ((Bank)payer).setCode(bankCode);
-            } else{
-                payer = new Payer();
+            Payer payer = newEm.find(Payer.class, unp);
+            if(payer==null){
+                if(bankCode!=null){
+                    payer = new Bank();
+                    ((Bank)payer).setCode(bankCode);
+                } else{
+                    payer = new Payer();
+                }
+                payer.setId(unp);
             }
-            payer.setId((String) attr[0]);
             payer.setName((String) attr[1]);
             payer.getAccounts().add(findAccount((String) attr[2]));
             newEm.merge(payer);
@@ -182,8 +194,8 @@ public class IpModelTester extends CoreIpModelTester {
     private void loadIn_ppDocument(EntityManager oldEm, EntityManager newEm) {
         Query oldDocumentQuey = oldEm.createNativeQuery("select * from In_pp /*where rownum<5*/ order by doc_date, doc_num");
         EntityTransaction transaction = newEm.getTransaction();
-        transaction.begin();
         int i = 0;
+        transaction.begin();
         for(Object o :oldDocumentQuey.getResultList()) {
             Object[] attr = (Object[]) o;
 
@@ -205,12 +217,16 @@ public class IpModelTester extends CoreIpModelTester {
             if(act!=null && act.getContract() == null){
                 //
                 //
-                act.setContract(findDoc(newEm, (String) attr[IN_CONTRACT_NUM], getAsDate(attr[IN_CONTRACT_DATE]), new Contract()));
+                Contract contract = findDoc(newEm, (String) attr[IN_CONTRACT_NUM], getAsDate(attr[IN_CONTRACT_DATE]), new Contract());
+                if(contract!=null){
+                    //TODO: придумать алгоритм распознавания контрагента
+                    contract.setCustomer(null);
+                }
+                act.setContract(contract);
             }
             //
             final Date operDate = getAsDate(attr[IN_OPER_DATE]);
             pay.setApplyDate(operDate ==null? docDate: operDate);
-//            document.ge
 
             newEm.merge(pay);
 //            if(i++>100){
@@ -237,8 +253,9 @@ public class IpModelTester extends CoreIpModelTester {
         if(docNumber!=null || docDate!=null){
             doc = (T) newEm.find(Document.class, new DocumentId(docDate, docNumber));
             doc = (doc==null? newDoc: doc);
-            doc.setDocNumber(docNumber);
-            doc.setDocDate(docDate);
+
+            DocumentId docId = new DocumentId(docDate, docNumber);
+            doc.setId(docId);
         }
         return doc;
     }
@@ -252,3 +269,5 @@ public class IpModelTester extends CoreIpModelTester {
         return (o!=null)? new Date(((java.sql.Timestamp) o) .getTime()): null;
     }
 }
+
+

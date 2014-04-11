@@ -14,6 +14,7 @@ import java.util.Set;
 //) })
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "PAYER")
+@Access(value = AccessType.PROPERTY)
 public class Payer extends VersionedEntity<String> {
     private String UNP;
     protected String name;

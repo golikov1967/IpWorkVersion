@@ -12,6 +12,7 @@ import java.io.Serializable;
 ) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "BANK")
+@Access(value = AccessType.PROPERTY)
 public class Bank extends Payer implements Serializable {
 
     @Column(length = 9)
