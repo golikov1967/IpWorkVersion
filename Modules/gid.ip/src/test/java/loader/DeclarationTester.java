@@ -55,7 +55,9 @@ public class DeclarationTester extends CoreIpModelTester {
         newEm.getTransaction().commit();
     }
 
-    //TODO Реализовать тест сверки сумм по декларациям старой и новой моделей
+    /**
+     * Тест сверки сумм по декларациям старой и новой моделей
+     */
     @Test
     public void declarationTest(){
         connectTest();
