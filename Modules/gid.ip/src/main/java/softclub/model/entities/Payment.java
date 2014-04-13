@@ -2,6 +2,7 @@ package softclub.model.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -13,7 +14,7 @@ public class Payment extends Document implements Serializable {
     private Declaration declaration;
     private Date applyDate;
     private String payNote;
-    private double paySum;
+    private BigDecimal paySum;
     private Payer payer;
     private Integer sequenceNumber;
 
@@ -44,7 +45,7 @@ public class Payment extends Document implements Serializable {
     }
 
     @Column(name = "PAY_SUM")
-    public double getPaySum() {
+    public BigDecimal getPaySum() {
         return paySum;
     }
 
@@ -90,7 +91,7 @@ public class Payment extends Document implements Serializable {
         this.applyDate = applyDate;
     }
 
-    public void setPaySum(double paySum) {
+    public void setPaySum(BigDecimal paySum) {
         this.paySum = paySum;
     }
 

@@ -157,7 +157,7 @@ public class IpModelTester extends CoreIpModelTester {
             // DOC_SUM
             final Object docSumm = attr[2];
             if(docSumm!=null)
-                pay.setPaySum(((BigDecimal) docSumm).doubleValue());
+                pay.setPaySum(((BigDecimal) docSumm));
             //3 PAYER_ID
             String payerUnp = (String) attr[3];
             if(payerUnp!=null){
@@ -206,7 +206,7 @@ public class IpModelTester extends CoreIpModelTester {
             //
             final Object docSumm = attr[IN_DOC_SUM];
             if(docSumm!=null)
-            pay.setPaySum(((BigDecimal) docSumm).doubleValue());
+            pay.setPaySum(((BigDecimal) docSumm));
             //
             Act act = findDoc(newEm, (String) attr[IN_AKT_NUM], getAsDate(attr[IN_AKT_DATE]), new Act());
             pay.setAct(act);
@@ -219,7 +219,12 @@ public class IpModelTester extends CoreIpModelTester {
                 //
                 Contract contract = findDoc(newEm, (String) attr[IN_CONTRACT_NUM], getAsDate(attr[IN_CONTRACT_DATE]), new Contract());
                 if(contract!=null){
-                    //TODO: придумать алгоритм распознавания контрагента
+                    /**
+                     *TODO: придумать алгоритм распознавания контрагента
+                     * например по контексту назначения платежа - каждый контрагент
+                     * использует в назначении свои особые фразы, определяемые по регуляркам
+                     */
+
                     contract.setCustomer(null);
                 }
                 act.setContract(contract);

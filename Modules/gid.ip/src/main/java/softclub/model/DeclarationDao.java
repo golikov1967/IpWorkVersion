@@ -84,14 +84,14 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         Declaration result = new Declaration();
         result.setBeginDate(calcDate);
         // взять сумму приходов за период
-        final double inSumm = inputPaymentDao.getTestSum4Date(currYear, 0, iMonth);
+        final double inSumm = inputPaymentDao.getTestSum4Date(currYear, 0, iMonth).doubleValue();
 
         // вычесть сумму возвратов за период
-        final double minusSumm = outputPaymentDao.getMinusSum4Date(iMonth, currYear);
+        final double minusSumm = outputPaymentDao.getMinusSum4Date(iMonth, currYear).doubleValue();
         result.setTotalInputYear(inSumm - minusSumm);
 
         // налоговая база ВСЕГО - (сумма поступлений за период)
-        result.setS2(inputPaymentDao.getInputSum4Date(currYear, begMonth, iMonth));
+        result.setS2(inputPaymentDao.getInputSum4Date(currYear, begMonth, iMonth).doubleValue());
 
         // налога по текущей ставке
         result.setS2_1(result.getS2());

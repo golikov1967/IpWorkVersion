@@ -335,13 +335,13 @@ public class SessionEJBBean{
         if (!d.equals(p.getDeclaration())) {
             Declaration old = p.getDeclaration();
 
-            d.setS2(d.getS2() + p.getPaySum());
+            d.setS2(d.getS2() + p.getPaySum().doubleValue());
             if (d.getPrev() != null) {
                 d.setTotalInputYear(d.getPrev().getTotalInputYear() +
                                              d.getPrev().getS2());
             }
             if (old != null) {
-                old.setS2(old.getS2() - p.getPaySum());
+                old.setS2(old.getS2() - p.getPaySum().doubleValue());
                 old = em.merge(old);
             }
         }

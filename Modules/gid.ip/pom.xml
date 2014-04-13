@@ -46,17 +46,22 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <outputDirectory>target/metamodel</outputDirectory>
                             <compilerArguments>
                                 -Aeclipselink.persistencexml=${basedir}/src/main/resources/META-INF/persistence.xml
                             </compilerArguments>
                             <processors>
-                                <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor
-                                </processor>
+                                <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
                             </processors>
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.eclipse.persistence</groupId>
+                        <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+                        <version>${eclipselink.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

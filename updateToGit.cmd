@@ -1,2 +1,2 @@
 git checkout master
-git svn rebase
+rem git svn rebase

@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -27,7 +28,7 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
         super(InputPayment.class);
     }
 
-    public Double getTestSum4Date(int currYear, int begMonth, int endMonth) {
+    public BigDecimal getTestSum4Date(int currYear, int begMonth, int endMonth) {
         return getInputSum4Date(currYear, begMonth, endMonth);
     }
 
@@ -42,9 +43,9 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
      * and to_char(t.doc_date, 'yyyy') = currYear
      * and to_char(nvl(t.oper_date, t.doc_date), 'mm') <= cMonth;
      */
-    public Double getInputSum4Date(int currYear, int begMonth, int endMonth) {
+    public BigDecimal getInputSum4Date(int currYear, int begMonth, int endMonth) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Double> criteriaQuery = cb.createQuery(Double.class);
+        CriteriaQuery<BigDecimal> criteriaQuery = cb.createQuery(BigDecimal.class);
         Root<InputPayment> root = criteriaQuery.from(type);
 
 
@@ -92,9 +93,9 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
         );
 
         criteriaQuery.select(cb.sum(root.get(Payment_.paySum)));
-        TypedQuery<Double> query = em.createQuery(criteriaQuery);
-        Double result = query.getSingleResult();
+        TypedQuery<BigDecimal> query = em.createQuery(criteriaQuery);
+        BigDecimal result = query.getSingleResult();
 
-        return result==null? 0d: result;
+        return result==null? BigDecimal.ZERO : result;
     }
 }

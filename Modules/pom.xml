@@ -28,10 +28,11 @@
         <slf4j.version>1.7.2</slf4j.version>
         <javax.faces.version>2.2.4</javax.faces.version>
         <!--weblogic-->
-        <weblogic.plugin.version>12.1.2-0-0</weblogic.plugin.version>
+        <weblogic.plugin.version>10.3.4</weblogic.plugin.version>
         <weblogic.plugin.adminurl>t3://127.0.0.1:7001</weblogic.plugin.adminurl>
         <weblogic.plugin.user>weblogic</weblogic.plugin.user>
         <weblogic.plugin.password>weblogic1</weblogic.plugin.password>
+        <eclipselink.version>2.5.1</eclipselink.version>
     </properties>
 
     <dependencies>
@@ -169,6 +170,23 @@
                 <version>${weblogic.plugin.version}</version>
                 <configuration>
                     <source>${project.build.directory}/${project.build.finalName}.jar</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                    <fork>true</fork>
+                    <!-- -proc:{none|only} : By the default, javac will run annotation processors and compile all sources.
+                    Using proc:none option, no annotation processing is done – useful when you are building annotation
+                    processors themselves. Using proc:only option, only annotation processing is done – useful when you
+                    are running validations, as quality tools or standards checkers, inside annotation processors.-->
+                    <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
             </plugin>
         </plugins>
