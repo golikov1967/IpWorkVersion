@@ -1,19 +1,19 @@
 package loader;
 
+import de.akquinet.jbosscc.needle.annotation.InjectIntoMany;
 import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
-import de.akquinet.jbosscc.needle.junit.DatabaseRule;
-import de.akquinet.jbosscc.needle.junit.NeedleRule;
+import loader.base.CoreIpModelTester;
 import loader.entity.EasyDeclaration;
-import org.apache.log4j.Logger;
-import org.junit.Rule;
 import org.junit.Test;
-import softclub.model.*;
+import softclub.model.DeclarationDao;
+import softclub.model.InputPaymentDao;
+import softclub.model.OutputPaymentDao;
 import softclub.model.entities.Declaration;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -22,29 +22,19 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by gid_000 on 23.01.14.
  */
-public class DeclarationTester{
-    @Rule
-    public DatabaseRule newDatabaseRule = new DatabaseRule("NewModelIP");
-    @Rule
-    public NeedleRule needleRule = new NeedleRule(newDatabaseRule);
-    @Rule
-    public DatabaseRule oldDatabaseRule = new DatabaseRule("OldModelIP");
-    @Rule
-    public NeedleRule oldNeedleRule = new NeedleRule(oldDatabaseRule);
-    @Inject
-    protected javax.persistence.EntityManager newEm;
-    //    Logger LOGGER = Logger.getRootLogger();
-    protected Logger LOGGER = Logger.getLogger("loader.IpModelTester");
+public class DeclarationTester extends CoreIpModelTester {
 
-
-    @ObjectUnderTest(implementation = DeclarationDao.class)
-    protected DeclarationDao declDao;
-
-    @ObjectUnderTest(implementation = InputPaymentDao.class)
+    @InjectIntoMany
+    @ObjectUnderTest
     InputPaymentDao inputPaymentDao;
 
-    @ObjectUnderTest(implementation = OutputPaymentDao.class)
+    @InjectIntoMany
+    @ObjectUnderTest
     OutputPaymentDao outputPaymentDao;
+
+    @InjectIntoMany
+    @ObjectUnderTest
+    protected DeclarationDao declarationDao;
 
     public static final String DECLARATION_SQL =
             "select IMONTH,IYEAR,S1,S2,S2_1,S3,S3_1,S4,S5 " +
@@ -54,11 +44,13 @@ public class DeclarationTester{
 
     @Test
     public void declarationOneTest(){
-        declDao.inputPaymentDao = inputPaymentDao;
-        declDao.outputPaymentDao = outputPaymentDao;
-        Declaration old = declDao.findDeclaration(declDao.getDate4Params(11,2008));
+        connectTest();
+        Declaration old = declarationDao.findDeclaration(declarationDao.getDate4Params(0, 2014));
+        if(old==null){
+            old = new Declaration();
+        }
         newEm.getTransaction().begin();
-        Declaration newDecl = declDao.calcDeclaration(2008, 12, old);
+        Declaration newDecl = declarationDao.calcDeclaration(2014, 4, old);
         assertEquals(2960000, newDecl.getTotalInputYear(), 1);
         newEm.getTransaction().commit();
     }
@@ -66,9 +58,8 @@ public class DeclarationTester{
     //TODO Реализовать тест сверки сумм по декларациям старой и новой моделей
     @Test
     public void declarationTest(){
-        assertNotNull(declDao);
-        declDao.inputPaymentDao = inputPaymentDao;
-        declDao.outputPaymentDao = outputPaymentDao;
+        connectTest();
+        assertNotNull(declarationDao);
         EntityManagerFactory oldFactory = Persistence.createEntityManagerFactory("OldModelIP");
         EntityManager oldEm = oldFactory.createEntityManager();
         assertNotNull(oldEm);
@@ -77,14 +68,33 @@ public class DeclarationTester{
         assertNotNull(oldList);
         Declaration oldDecl = new Declaration();
         for (EasyDeclaration old: oldList) {
-            Declaration newDecl = declDao.calcDeclaration(old.getYear(), old.getMonth(), oldDecl);
+            Declaration newDecl = declarationDao.calcDeclaration(old.getId().getYear(), old.getId().getMonth(), oldDecl);
             newEm.getTransaction().begin();
             newEm.merge(newDecl);
             assertEquals(old.getS5(), newDecl.getNalog(), 0.01);
             newEm.getTransaction().commit();
-            oldDecl = old.getMonth()==12? new Declaration(): newDecl;
+            oldDecl = old.getId().getMonth()==12? new Declaration(): newDecl;
         }
         //Declaration decl = declDao.calculate();
         //12-2008
     }
+
+    @Test
+    public void connectTest(){
+        EntityManager oldEm = oldDatabaseRule.getEntityManager();
+        //EntityManager newEm = newDatabaseRule.getEntityManager();
+
+        assertNotNull(oldEm);
+        assertNotNull(newModel);
+        assertNotNull(newEm);
+
+        Query oldQ = oldEm.createNativeQuery("select USER from dual");
+        String user = (String) oldQ.getSingleResult();
+        assertEquals("GID", user);
+
+        Query newQ = newEm.createNativeQuery("select USER from dual");
+        user = (String) newQ.getSingleResult();
+        assertEquals("GIDPOST", user);
+    }
+
 }

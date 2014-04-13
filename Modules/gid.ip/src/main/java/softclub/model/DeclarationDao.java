@@ -102,7 +102,7 @@ public class DeclarationDao extends AbstractDao<Declaration, Long> {
         result.setS4(prev.getS3());
 
         result.setNalog(result.getS3() - result.getS4());
-
+//45	9	2011	10938100.00	10938100.00	10938100.00	875048.00	875048.00	528814.40	346233.60
 
 
         return result;

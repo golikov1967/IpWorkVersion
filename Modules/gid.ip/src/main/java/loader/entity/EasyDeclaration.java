@@ -4,21 +4,17 @@ package loader.entity;
  * Created by gid_000 on 26.01.14.
  */
 
-import javax.persistence.Column;
+import by.softclub.fos.model.dao.base.BaseEntity;
+import softclub.model.entities.pk.DeclarationId;
+
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 
 @Entity(name = "EasyDeclaration")
 @Table(name = "T_EASY_DECL_NEW")
-public class EasyDeclaration {
-    @Id
-    @Column(name = "IMONTH", nullable =false)
-    int month;
-    @Id
-    @Column(nullable =false, name = "IYEAR")
-    int year;
+public class EasyDeclaration implements BaseEntity<DeclarationId> {
     double s1;
     double s2;
     double s2_1;
@@ -26,22 +22,6 @@ public class EasyDeclaration {
     double s3_1;
     double s4;
     double s5;
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
 
     public double getS1() {
         return s1;
@@ -106,7 +86,7 @@ public class EasyDeclaration {
 
         EasyDeclaration that = (EasyDeclaration) o;
 
-        if (month != that.month) return false;
+        if (!id.equals(that.getId())) return false;
         if (Double.compare(that.s1, s1) != 0) return false;
         if (Double.compare(that.s2, s2) != 0) return false;
         if (Double.compare(that.s2_1, s2_1) != 0) return false;
@@ -114,7 +94,6 @@ public class EasyDeclaration {
         if (Double.compare(that.s3_1, s3_1) != 0) return false;
         if (Double.compare(that.s4, s4) != 0) return false;
         if (Double.compare(that.s5, s5) != 0) return false;
-        if (year != that.year) return false;
 
         return true;
     }
@@ -123,8 +102,8 @@ public class EasyDeclaration {
     public int hashCode() {
         int result;
         long temp;
-        result = month;
-        result = 31 * result + year;
+        result = getId().getMonth();
+        result = 31 * result + getId().getYear();
         temp = Double.doubleToLongBits(s1);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(s2);
@@ -140,5 +119,21 @@ public class EasyDeclaration {
         temp = Double.doubleToLongBits(s5);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    protected DeclarationId id;
+
+    @Override
+    @EmbeddedId
+    public DeclarationId getId() {
+        if(id==null){
+            id = new DeclarationId();
+        }
+        return id;
+    }
+
+    @Override
+    public void setId(DeclarationId declarationId) {
+        id  = declarationId;
     }
 }
