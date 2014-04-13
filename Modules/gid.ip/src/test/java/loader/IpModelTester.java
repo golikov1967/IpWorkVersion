@@ -53,7 +53,7 @@ public class IpModelTester extends CoreIpModelTester {
 
     @Test
     /**
-     * TODO: Здесь главный тест модели
+     * TODO: Загрузка данных в новую схему из старой
      * */
     public void reloadData(){
         EntityManager oldEm = oldDatabaseRule.getEntityManager();
