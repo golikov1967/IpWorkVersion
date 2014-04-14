@@ -16,9 +16,16 @@ public class InputDocLoaderTest extends InputDocTester {
     public void loadFromSoftclub() throws ParseException {
         //массив парамеров приходных документов
         Object[][] params = new Object[][]{
-                {"NOT_NUMBERED", parseDate("01/01/2999"), 1550400d, "Р15/1", parseDate("03/01/2014"), "14/3-3", parseDate("03/03/2014")},
+//                {"000401", parseDate("12/02/2014"), 2982000d, "Р15/1", parseDate("03/01/2014"), "14/1-9", parseDate("09/01/2014")},
+//                {"000570", parseDate("25/02/2014"), 3726000d, "Р15/1", parseDate("03/01/2014"), "14/1-15", parseDate("15/01/2014")},
+//                {"000569", parseDate("25/02/2014"), 3942000d, "Р15/1", parseDate("03/01/2014"), "14/1-21", parseDate("21/01/2014")},
                 {"признак окончания массива"}
         };
+        loadFromArray(params);
+
+    }
+
+    private void loadFromArray(Object[][] params) throws ParseException {
         //загрузка массива
         for(int i = 0; i< params.length; i++){
             if(params[i].length==7){

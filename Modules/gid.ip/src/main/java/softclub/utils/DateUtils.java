@@ -24,4 +24,13 @@ public class DateUtils {
         cal.set(Calendar.DATE,1);
         return cal.getTime();
     }
+
+    public static Date getLastDayOfMounth(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MONTH,1);
+        cal.set(Calendar.DATE,1);
+        cal.add(Calendar.DATE,-1);
+        return cal.getTime();
+    }
 }
