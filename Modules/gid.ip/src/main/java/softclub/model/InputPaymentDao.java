@@ -1,6 +1,9 @@
 package softclub.model;
 
 import by.softclub.fos.model.dao.base.AbstractDao;
+import softclub.model.entities.Act;
+import softclub.model.entities.Contract;
+import softclub.model.entities.Document;
 import softclub.model.entities.InputPayment;
 import softclub.model.entities.InputPayment_;
 import softclub.model.entities.Payment_;
@@ -13,6 +16,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -97,5 +103,37 @@ public class InputPaymentDao extends AbstractDao<InputPayment, DocumentId> {
         BigDecimal result = query.getSingleResult();
 
         return result==null? BigDecimal.ZERO : result;
+    }
+
+    public void fromSoftclub(String nDoc, Date payDate, double paySumm, String contractNumber, Date contractDate, String actNumber, Date actDate) throws ParseException {
+        InputPayment inputPayment = new InputPayment();
+        inputPayment.setId(new DocumentId(payDate, nDoc));
+        inputPayment.setPaySum(BigDecimal.valueOf(paySumm));
+        Act act = findDoc(actNumber, actDate, new Act());
+        Contract contract = findDoc(contractNumber, contractDate, new Contract());
+        act.setContract(contract);
+        inputPayment.setAct(act);
+        inputPayment.setPayNote(MessageFormat.format("ОПЛАТА СОГЛАСНО ДОГ. {0} ОТ {1} ЗА ТЕСТИРОВАНИЕ ПО СОГЛАСНО АКТУ {2} ОТ {3}Г. ЦЕНЫ СОГЛАСНО П.3.3 ДОГОВОРА. БЕЗ НДС.",
+                contractNumber, dateToString(contractDate), actNumber, dateToString(actDate)));
+        em.merge(inputPayment);
+
+    }
+
+
+    protected  <T extends Document> T findDoc(String docNumber, Date docDate, T newDoc) {
+        T doc = null;
+        if(docNumber!=null || docDate!=null){
+            doc = (T) em.find(newDoc.getClass(), new DocumentId(docDate, docNumber));
+            doc = (doc==null? newDoc: doc);
+
+            DocumentId docId = new DocumentId(docDate, docNumber);
+            doc.setId(docId);
+        }
+        return doc;
+    }
+
+    private String dateToString(Date date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(date);
     }
 }

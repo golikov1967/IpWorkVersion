@@ -2,8 +2,14 @@ package loader;
 
 import loader.base.CoreIpModelTester;
 import org.junit.Test;
-import softclub.model.entities.*;
-import softclub.model.entities.pk.DocumentId;
+import softclub.model.entities.Account;
+import softclub.model.entities.Act;
+import softclub.model.entities.Bank;
+import softclub.model.entities.Contract;
+import softclub.model.entities.InputPayment;
+import softclub.model.entities.OutputPayment;
+import softclub.model.entities.PayType;
+import softclub.model.entities.Payer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -153,7 +159,7 @@ public class IpModelTester extends CoreIpModelTester {
             final String docNumber = ((BigDecimal) attr[0]).toString();
             // DOC_DATE
             final Date docDate = getAsDate(attr[1]);
-            OutputPayment pay = findDoc(newEm, docNumber, docDate, new OutputPayment());
+            OutputPayment pay = findDoc(docNumber, docDate, new OutputPayment());
             // DOC_SUM
             final Object docSumm = attr[2];
             if(docSumm!=null)
@@ -202,13 +208,13 @@ public class IpModelTester extends CoreIpModelTester {
             final String docNumber = (String) attr[IN_DOC_NUM];
 
             final Date docDate = getAsDate(attr[IN_DOC_DATE]);
-            InputPayment pay = findDoc(newEm, docNumber, docDate, new InputPayment());
+            InputPayment pay = findDoc(docNumber, docDate, new InputPayment());
             //
             final Object docSumm = attr[IN_DOC_SUM];
             if(docSumm!=null)
             pay.setPaySum(((BigDecimal) docSumm));
             //
-            Act act = findDoc(newEm, (String) attr[IN_AKT_NUM], getAsDate(attr[IN_AKT_DATE]), new Act());
+            Act act = findDoc((String) attr[IN_AKT_NUM], getAsDate(attr[IN_AKT_DATE]), new Act());
             pay.setAct(act);
 
             //
@@ -217,7 +223,7 @@ public class IpModelTester extends CoreIpModelTester {
             if(act!=null && act.getContract() == null){
                 //
                 //
-                Contract contract = findDoc(newEm, (String) attr[IN_CONTRACT_NUM], getAsDate(attr[IN_CONTRACT_DATE]), new Contract());
+                Contract contract = findDoc((String) attr[IN_CONTRACT_NUM], getAsDate(attr[IN_CONTRACT_DATE]), new Contract());
                 if(contract!=null){
                     /**
                      *TODO: придумать алгоритм распознавания контрагента
@@ -251,18 +257,6 @@ public class IpModelTester extends CoreIpModelTester {
     private void commit(EntityManager newEm, EntityTransaction transaction) {
         newEm.flush();
         transaction.commit();
-    }
-
-    private <T extends Document> T findDoc(EntityManager newEm, String docNumber, Date docDate, T newDoc) {
-        T doc = null;
-        if(docNumber!=null || docDate!=null){
-            doc = (T) newEm.find(Document.class, new DocumentId(docDate, docNumber));
-            doc = (doc==null? newDoc: doc);
-
-            DocumentId docId = new DocumentId(docDate, docNumber);
-            doc.setId(docId);
-        }
-        return doc;
     }
 
 //    private Payment findPayment(EntityManager newEm, String docNumber, Date docDate) {
