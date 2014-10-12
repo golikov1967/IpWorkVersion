@@ -10,6 +10,7 @@
     <modules>
         <module>gid.ip</module>
         <module>core</module>
+        <module>reportBundle</module>
     </modules>
 
     <properties>

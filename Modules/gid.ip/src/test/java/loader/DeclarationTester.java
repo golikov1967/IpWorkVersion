@@ -50,13 +50,13 @@ public class DeclarationTester extends CoreIpModelTester {
             old = new Declaration();
         }
         newEm.getTransaction().begin();
-        Declaration newDecl = declarationDao.calcDeclaration(2014, 4, old);
+        Declaration newDecl = declarationDao.calcDeclaration(2014, 4, new Declaration());
         assertEquals(2960000, newDecl.getTotalInputYear(), 1);
         newEm.getTransaction().commit();
     }
 
     /**
-     * Тест сверки сумм по декларациям старой и новой моделей
+     * TODO: Тест сверки сумм по декларациям старой и новой моделей
      */
     @Test
     public void declarationTest(){
@@ -77,8 +77,6 @@ public class DeclarationTester extends CoreIpModelTester {
             newEm.getTransaction().commit();
             oldDecl = old.getId().getMonth()==12? new Declaration(): newDecl;
         }
-        //Declaration decl = declDao.calculate();
-        //12-2008
     }
 
     @Test
