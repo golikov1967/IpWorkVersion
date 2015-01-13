@@ -1,22 +1,32 @@
 package softclub.model.entities;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @DiscriminatorValue("Payment")
 @Access(value = AccessType.PROPERTY)
+@XmlRootElement
 public class Payment extends Document implements Serializable {
 
-    private PayType payType;
+    protected PayType payType;
     private Declaration declaration;
     private Date applyDate;
     private String payNote;
     private BigDecimal paySum;
-    private Payer payer;
+    protected Payer payer;
     private Integer sequenceNumber;
+
+    public void setDocSumString(String docSumString) {
+        this.docSumString = docSumString;
+    }
+
+    private String docSumString;
 
     public Payment() {
     }
@@ -32,6 +42,20 @@ public class Payment extends Document implements Serializable {
         return declaration;
     }
 
+    @XmlElement(name = "DOC_DATE_STRING")
+    @Transient
+    public String getDocDateString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        return sdf.format(applyDate);
+    }
+
+
+    @XmlElement(name = "DOC_SUM_STRING")
+    @Transient
+    public String getDocSumString(){
+        return docSumString;
+    }
+
     @Temporal(value = TemporalType.DATE)
     @Column(name = "APPLY_DATE", nullable = false)
     public Date getApplyDate() {
@@ -44,6 +68,7 @@ public class Payment extends Document implements Serializable {
         return payer;
     }
 
+    @XmlElement(name = "DOC_SUM")
     @Column(name = "PAY_SUM")
     public BigDecimal getPaySum() {
         return paySum;
@@ -55,6 +80,7 @@ public class Payment extends Document implements Serializable {
         return sequenceNumber;
     }
 
+    @XmlElement(name = "PAY_TYPE_TEXT")
     @Column(length = 2000, name = "PAY_NOTE")
     public String getPayNote() {
         return payNote;
@@ -75,7 +101,7 @@ public class Payment extends Document implements Serializable {
         this.act = act;
     }
 
-    private Payer recipient;
+    protected Payer recipient;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RECIPIENT_UNP", referencedColumnName = "UNP")
@@ -129,4 +155,10 @@ public class Payment extends Document implements Serializable {
         this.payer = payer;
     }
 
+
+    @Transient
+    @XmlElement(name = "PAY_NAME")
+    public String getPayerName() {
+        return payer.name + ", РБ г.Минск ул.Руссиянова д.27 корп.2 кв.114";
+    }
 }

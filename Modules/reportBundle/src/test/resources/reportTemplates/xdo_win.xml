@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config version="1.0.0" xmlns="http://xmlns.oracle.com/oxp/config/">
+    <!-- Properties -->
+    <properties>
+        <!-- System level properties -->
+
+        <!-- PLEASE SELECT A VALID TEMPFILE DIRECTORY!!! -->
+        <!--<property name="system-temp-dir">/home/oracle/cdi/temp</property>-->
+        <property name="system-temp-dir">/temp</property>
+
+        <!-- PDF compression -->
+        <property name="pdf-compression">true</property>
+
+        <!-- PDF security -->
+        <property name="pdf-security">false</property>
+        <property name="pdf-open-password">user</property>
+        <property name="pdf-permissions-password">owner</property>
+        <property name="pdf-no-printing">true</property>
+        <property name="pdf-no-changing-the-document">true</property>
+    </properties>
+
+    <!-- Font setting -->
+    <fonts>
+
+        <font family="Arial" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/cdi/fonts/arial.ttf"/>-->
+            <truetype path="C:\WINDOWS\Fonts\arial.ttf"/>
+        </font>
+
+        <!-- Windows Wingdings font -->
+        <font family="Wingdings" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/cdi/fonts/wingding.ttf"/>-->
+            <truetype path="C:\WINDOWS\Fonts\wingding.ttf"/>
+        </font>
+
+        <font family="Tahoma" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/cdi/fonts/tahoma.ttf"/>-->
+            <truetype path="C:\WINDOWS\Fonts\tahoma.ttf"/>
+        </font>
+
+        <font family="Times New Roman" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/cdi/fonts/times.ttf"/>-->
+            <truetype path="C:\WINDOWS\Fonts\times.ttf"/>
+        </font>
+
+        <font family="3 of 9 Barcode" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/cdi/fonts/3OF9_NEW.TTF"/>-->
+            <truetype path="C:\WINDOWS\Fonts\3OF9_NEW.TTF"/>
+        </font>
+
+    </fonts>
+</config>

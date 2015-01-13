@@ -3,6 +3,7 @@ package softclub.model.entities;
 //~--- JDK imports ------------------------------------------------------------
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +22,8 @@ public class Payer extends VersionedEntity<String> {
     private Date registrationDate;
     private Set<Account> accounts = new HashSet<Account>();
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany//(mappedBy = "owner")
+    @JoinColumn(name = "OWNER_UNP", referencedColumnName = "UNP", updatable=true)
     public Set<Account> getAccounts() {
         return accounts;
     }

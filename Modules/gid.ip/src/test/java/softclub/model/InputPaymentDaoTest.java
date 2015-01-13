@@ -3,6 +3,11 @@ package softclub.model;
 import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
 import loader.base.CoreIpModelTester;
 import org.junit.Test;
+import softclub.model.entities.Payment;
+import softclub.model.entities.pk.DocumentId;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -26,5 +31,25 @@ public class InputPaymentDaoTest extends CoreIpModelTester {
 
         r = outputPaymentDao.getMinusSum4Date(1,2008).doubleValue();
         assertNotNull(r);
+    }
+
+    @Test
+    public void testFindInputPay(){
+        Calendar сal = Calendar.getInstance();
+        //"2005-08-23";"15532"
+        сal.set(2005,8 - 1,23);
+
+        Date docDate = new Date(сal.getTime().getTime());
+        Payment pay = inputPaymentDao.find(new DocumentId(
+                docDate,
+                "15532"
+        ));
+        assertNotNull(pay);
+    }
+
+    @Test
+    public void testFindOutputPayment(){
+        Payment pay = outputPaymentDao.findAny();
+        assertNotNull(pay);
     }
 }

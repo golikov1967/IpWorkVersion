@@ -1,38 +1,26 @@
 package softclub.model.entities;
 
+import by.softclub.fos.model.dao.base.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
-@NamedQueries({ @NamedQuery(
-    name  = "Currency.findAll",
-    query = "select o from Currency o"
-) })
-@Inheritance
 @Table(name = "CURRENCY")
 @Access(value = AccessType.PROPERTY)
-public class Currency extends VersionedEntity<Long> {
+public class Currency implements BaseEntity<String> {
 
-    @Column(
-        length = 3,
-        name   = "code_ISO"
-    )
     private int codeISO;
-
-    @Column(
-        length = 50,
-        name   = "NAME"
-    )
     private String name;
 
-    @Column(
-        length = 3,
-        name   = "name_ISO"
-    )
-    @Id
     private String nameISO;
 
     public Currency() {}
 
+    @Column(
+            length = 3,
+            name   = "name_ISO"
+    )
+    @Id
     public String getNameISO() {
         return nameISO;
     }
@@ -41,6 +29,10 @@ public class Currency extends VersionedEntity<Long> {
         this.nameISO = nameISO;
     }
 
+    @Column(
+            length = 3,
+            name   = "code_ISO"
+    )
     public int getCodeISO() {
         return codeISO;
     }
@@ -49,11 +41,25 @@ public class Currency extends VersionedEntity<Long> {
         this.codeISO = codeISO;
     }
 
+    @Column(
+            length = 50,
+            name   = "NAME"
+    )
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getId() {
+        return nameISO;
+    }
+
+    @Override
+    public void setId(String newId) {
+        nameISO = newId;
     }
 }

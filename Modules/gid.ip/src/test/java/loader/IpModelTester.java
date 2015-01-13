@@ -1,15 +1,12 @@
 package loader;
 
+import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
 import loader.base.CoreIpModelTester;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import softclub.model.entities.Account;
-import softclub.model.entities.Act;
-import softclub.model.entities.Bank;
-import softclub.model.entities.Contract;
-import softclub.model.entities.InputPayment;
-import softclub.model.entities.OutputPayment;
-import softclub.model.entities.PayType;
-import softclub.model.entities.Payer;
+import softclub.model.AccountDao;
+import softclub.model.CurrencyDao;
+import softclub.model.entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -28,6 +25,11 @@ import static org.junit.Assert.assertNotNull;
  * Time: 17:34
  */
 public class IpModelTester extends CoreIpModelTester {
+    @ObjectUnderTest
+    AccountDao accountDao;
+    @ObjectUnderTest
+    CurrencyDao currencyDao;
+
 
     public static final String SELECT_PAY_TYPES =
             "select  t.type_code, min(t.long_name), min(t.queue), min(t.pay_code) from pay_types t group by t.type_code";
@@ -36,15 +38,17 @@ public class IpModelTester extends CoreIpModelTester {
             "       o.doc_date,\n" +
             "       o.doc_sum,\n" +
             "       p.unp p_unp,\n" +
-            "       o.bank4get,\n" +
+            "       b4g.unp bank4get,\n" +
             "       b.unp b_unp,\n" +
             "       pt.type_code,\n" +
             "       o.pay_type_text,\n" +
             "       o.oper_date,\n" +
-            "       o.bank4put\n" +
-            "  from out_pp o, payers p, payers b, pay_types pt\n" +
+            "       b4p.unp bank4put\n" +
+            "  from out_pp o, payers p, payers b, pay_types pt, payers b4g, payers b4p\n" +
             "  where o.payer_id = p.payer_id(+)\n" +
             "  and o.beneficiary = b.payer_id(+)\n" +
+            "  and o.bank4get = b4g.payer_id(+)\n" +
+            "  and o.bank4put = b4p.payer_id(+)\n" +
             "  and o.pay_type_id = pt.pay_type_id(+)";
     public static final int IN_DOC_NUM = 0;
     public static final int IN_DOC_DATE = 1;
@@ -55,13 +59,14 @@ public class IpModelTester extends CoreIpModelTester {
     public static final int IN_CONTRACT_NUM = 6;
     public static final int IN_CONTRACT_DATE = 7;
     public static final int IN_OPER_DATE = 10;
+    private Currency byr;
 
 
     @Test
     /**
      * TODO: Загрузка данных в новую схему из старой
      * */
-    public void reloadData(){
+    public void reloadData() throws Exception {
         EntityManager oldEm = oldDatabaseRule.getEntityManager();
         //EntityManager newEm = newDatabaseRule.getEntityManager();
 
@@ -76,6 +81,13 @@ public class IpModelTester extends CoreIpModelTester {
 //        Query newQ = newEm.createNativeQuery("select USER from dual");
 //        user = (String) newQ.getSingleResult();
 //        assertEquals("GIDPOST", user);
+
+        //создаем нац. валюту
+        byr = new Currency();
+        byr.setCodeISO(974);
+        byr.setNameISO("BYR");
+        byr.setName("Белорусский рубль");
+        currencyDao.persist(byr);
 
         //загрузка приходных документов
         loadIn_ppDocument(oldEm, newEm);
@@ -136,7 +148,7 @@ public class IpModelTester extends CoreIpModelTester {
                 payer.setId(unp);
             }
             payer.setName((String) attr[1]);
-            payer.getAccounts().add(findAccount((String) attr[2]));
+            payer.getAccounts().add(findAccount((String) attr[2], payer));
             newEm.merge(payer);
             LOGGER.info(payer.getName() + ":" + payer.getId());
         }
@@ -144,11 +156,22 @@ public class IpModelTester extends CoreIpModelTester {
         LOGGER.info("загрузка плательщиков прошла успешно, загружено " + oldDocumentQuey.getResultList().size() + " записей");
     }
 
-    private Account findAccount(String account) {
-        return null;
+    private Account findAccount(String account, Payer owner) {
+        Account result = null;
+        if(StringUtils.isNotEmpty(account)){
+            Long id = Long.valueOf(account);
+            result = accountDao.find(id);
+            if(result==null && account!=null){
+                result = new Account();
+                result.setId(id);
+                //result.setOwner(owner);
+                result.setCurrency(byr);
+            }
+        }
+        return result;
     }
 
-    private void loadOut_ppDocument(EntityManager oldEm, EntityManager newEm) {
+    private void loadOut_ppDocument(EntityManager oldEm, EntityManager newEm) throws Exception {
         Query oldDocumentQuey = oldEm.createNativeQuery(SELECT_OUT_PP);
         EntityTransaction transaction = newEm.getTransaction();
         transaction.begin();
@@ -170,7 +193,23 @@ public class IpModelTester extends CoreIpModelTester {
                 pay.setPayer(newEm.find(Payer.class, payerUnp));
             }
 
-            //4 BANK4GET
+            //4 BANK4GET - на самом деле это банк плательщика
+            String bank4GetUnp = attr[9].toString();
+            if(bank4GetUnp!=null){
+                Bank payBank = newEm.find(Bank.class, bank4GetUnp);
+                Account account = pay.getPayer().getAccounts().iterator().next();
+                if(account!=null){
+                    if(account.getBank()==null){
+                        account.setBank(payBank);
+                    } else {
+                        if(!account.getBank().equals(payBank)){
+                            throw new Exception("load error");
+                        }
+                    }
+                }
+
+            }
+
             //5 BENEFICIARY
             String benUnp = (String) attr[5];
             if(benUnp!=null){
@@ -187,7 +226,25 @@ public class IpModelTester extends CoreIpModelTester {
             //8 OPER_DATE
             final Date operDate = getAsDate(attr[8]);
             pay.setApplyDate(operDate ==null? docDate: operDate);
-            //9 BANK4PUT
+            //9 BANK4PUT - на самом деле это банк получателя
+            String recipientBankUnp = attr[4].toString();
+            if(recipientBankUnp!=null){
+                Bank bank = newEm.find(Bank.class, recipientBankUnp);
+                if(!bank.equals(pay.getRecipient())){
+                    //Account account = pay.getRecipient().getAccounts().iterator().next();
+                    for(Account account: pay.getRecipient().getAccounts()){
+                        if(account!=null){
+                            if(account.getBank()==null){
+                                account.setBank(bank);
+                            } else {
+                                if(!account.getBank().equals(bank)){
+                                    throw new Exception("load error");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             newEm.merge(pay);
             commit(newEm, transaction);

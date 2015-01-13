@@ -56,6 +56,18 @@ public abstract class AbstractDao<T extends BaseEntity<ID>, ID extends Serializa
         return result;
     }
 
+    public T findAny() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> query = cb.createQuery(type);
+
+        query.orderBy(
+                cb.desc(query.from(type).get("id"))
+        );
+
+        T result = em.createQuery(query).setMaxResults(1).getSingleResult();
+        return result;
+    }
+
 
     /**
      * @param first    begin index

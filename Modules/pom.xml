@@ -186,4 +186,27 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>postgresql</id>
+            <dependencies>
+                <dependency>
+                    <groupId>postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>9.1-901.jdbc4</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>ojdbc6</artifactId>
+                    <version>11.2.0</version>
+                </dependency>
+                <!--<dependency>-->
+                <!--<groupId>org.postgresql</groupId>-->
+                <!--<artifactId>postgresql</artifactId>-->
+                <!--<version>9.3-1100-jdbc41</version>-->
+                <!--</dependency>-->
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

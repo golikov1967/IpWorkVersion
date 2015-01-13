@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config version="1.0.0" xmlns="http://xmlns.oracle.com/oxp/config/">
+    <!-- Properties -->
+    <properties>
+        <!-- System level properties -->
+
+        <!-- PLEASE SELECT A VALID TEMPFILE DIRECTORY!!! -->
+        <!--<property name="system-temp-dir">/home/oracle/cdi/temp</property>-->
+        <property name="system-temp-dir">/tmp</property>
+
+        <!-- PDF compression -->
+        <property name="pdf-compression">true</property>
+
+        <!-- PDF security -->
+        <property name="pdf-security">false</property>
+        <property name="pdf-open-password">user</property>
+        <property name="pdf-permissions-password">owner</property>
+        <property name="pdf-no-printing">true</property>
+        <property name="pdf-no-changing-the-document">true</property>
+    </properties>
+
+    <!-- Font setting -->
+    <fonts>
+
+        <font family="Arial" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/fos/fonts/arial.ttf"/>-->
+            <truetype path="/home/oracle/fos/fonts/arial.ttf"/>
+        </font>
+
+        <!-- Windows Wingdings font -->
+        <font family="Wingdings" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/fos/fonts/wingding.ttf"/>-->
+            <truetype path="/home/oracle/fos/fonts/wingding.ttf"/>
+        </font>
+
+        <font family="Tahoma" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/cdi/fonts/tahoma.ttf"/>-->
+            <truetype path="/home/oracle/fos/fonts/tahoma.ttf"/>
+        </font>
+
+        <font family="Times New Roman" style="normal" weight="normal">
+            <!--<truetype path="/home/oracle/cdi/fonts/times.ttf"/>-->
+            <truetype path="/home/oracle/fos/fonts/times.ttf"/>
+        </font>
+    </fonts>
+</config>

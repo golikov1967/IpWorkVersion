@@ -1,6 +1,7 @@
 package softclub.model.entities.pk;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -21,6 +22,7 @@ public class DocumentId implements Serializable {
 
     protected String docNumber;
 
+    @XmlElement(name = "ID_PP")
     @Column(name   = "DOC_NUMBER", length = 15)
     public String getDocNumber() {
         return docNumber;

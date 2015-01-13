@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @MappedSuperclass
 @Access(value = AccessType.PROPERTY)
-public abstract class VersionedEntity<I extends Serializable> implements Serializable {
+public abstract class VersionedEntity<I> implements Serializable {
 
     private int version = 0;
     private I id;

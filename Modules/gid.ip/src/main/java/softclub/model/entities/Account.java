@@ -1,5 +1,7 @@
 package softclub.model.entities;
 
+import by.softclub.fos.model.dao.base.BaseEntity;
+
 import javax.persistence.*;
 
 
@@ -7,20 +9,9 @@ import javax.persistence.*;
 @Inheritance
 @Table(name = "ACCOUNT")
 @Access(value = AccessType.PROPERTY)
-public class Account extends VersionedEntity<Long> {
-    @Id
-    @Column(name = "ACCOUNT_NUMBER", nullable = false)
+public class Account implements BaseEntity<Long> {
     private long accountNumber;
-
-    @Id
-    @ManyToOne(optional = true)
-    private Bank bank;
-
-    @ManyToOne
     private Currency currency;
-
-    @ManyToOne
-    private Payer owner;
 
     public Account() {}
 
@@ -32,6 +23,9 @@ public class Account extends VersionedEntity<Long> {
         this.accountNumber = accountNumber;
     }
 
+    private Bank bank;
+
+    @ManyToOne(optional = true, cascade = {CascadeType.ALL})
     public Bank getBank() {
         return bank;
     }
@@ -40,6 +34,7 @@ public class Account extends VersionedEntity<Long> {
         this.bank = bank;
     }
 
+    @ManyToOne
     public Currency getCurrency() {
         return currency;
     }
@@ -48,13 +43,15 @@ public class Account extends VersionedEntity<Long> {
         this.currency = currency;
     }
 
-    public Payer getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Payer payer) {
-        this.owner = payer;
-    }
+//    private Payer owner;
+//    @ManyToOne
+//    public Payer getOwner() {
+//        return owner;
+//    }
+//
+//    public void setOwner(Payer payer) {
+//        this.owner = payer;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -71,5 +68,17 @@ public class Account extends VersionedEntity<Long> {
     @Override
     public int hashCode() {
         return (int) (accountNumber ^ (accountNumber >>> 32));
+    }
+
+    @Override
+    @Id
+    @Column(name = "ACCOUNT_NUMBER", nullable = false)
+    public Long getId() {
+        return accountNumber;
+    }
+
+    @Override
+    public void setId(Long newId) {
+        accountNumber = newId;
     }
 }
