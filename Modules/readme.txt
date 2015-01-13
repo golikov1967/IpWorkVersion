@@ -10,3 +10,8 @@
 3. Внести акт
 4. Внести договор
 5. Внести платеж по договору
+
+
+Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.5.1.v20130918-f2b9fc5): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: org.postgresql.util.PSQLException: �����: ������������ "check" �� ������ �������� ����������� (�� ������)
+Error Code: 0

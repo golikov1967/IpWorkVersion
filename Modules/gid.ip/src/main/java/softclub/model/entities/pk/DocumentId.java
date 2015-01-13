@@ -2,7 +2,7 @@ package softclub.model.entities.pk;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,7 +32,7 @@ public class DocumentId implements Serializable {
 
     protected Date docDate;
 
-    @Temporal(value = TemporalType.DATE)
+//    @Temporal(value = TemporalType.DATE)
     @Column(name = "DOC_DATE")
     public Date getDocDate() {
         return docDate;

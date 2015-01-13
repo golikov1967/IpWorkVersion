@@ -3,7 +3,7 @@ package loader;
 import org.junit.Test;
 
 import java.text.ParseException;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created with IntelliJ IDEA.

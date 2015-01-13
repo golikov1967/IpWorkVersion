@@ -36,8 +36,8 @@ public class Act extends Document implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "CONTRACT_DATE", referencedColumnName = "DOC_DATE"),
-            @JoinColumn(name = "CONTRACT_NUMBER", referencedColumnName = "DOC_NUMBER")
+            @JoinColumn(name = "CONTRACT_DATE", referencedColumnName = "DOC_DATE", nullable=true, updatable=false),
+            @JoinColumn(name = "CONTRACT_NUMBER", referencedColumnName = "DOC_NUMBER", nullable=true, updatable=false)
     })
     public Contract getContract() {
         return contract;

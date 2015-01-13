@@ -14,7 +14,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -56,10 +57,14 @@ public class CoreIpModelTester {
         String user = (String) oldQ.getSingleResult();
         assertEquals("GID", user);
 
-        Query newQ = newEm.createNativeQuery("select USER from dual");
-        user = (String) newQ.getSingleResult();
-        assertEquals("GIDPOST", user);
+        String driver = (String) newEm.getEntityManagerFactory().getProperties().get("javax.persistence.jdbc.driver");
+        if("oracle.jdbc.driver.OracleDriver".equals(driver)) {
+            Query newQ = newEm.createNativeQuery("select USER from dual");
+            user = (String) newQ.getSingleResult();
+            assertEquals("GIDPOST", user);
+        }
     }
+
 
 
     protected  <T extends Document> T findDoc(String docNumber, Date docDate, T newDoc) {

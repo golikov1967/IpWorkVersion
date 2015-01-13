@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="914541445">
+  <component name="DataSourceManagerImpl" format="xml" hash="2216431264">
     <data-source source="LOCAL" name="GID" uuid="4bfa8e35-1746-409a-91cd-bff9aec22b2b">
       <driver-ref>oracle</driver-ref>
       <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
       <jdbc-url>jdbc:oracle:thin:@//sc-oracle2.scx:1521/SCKASSA</jdbc-url>
-      <user-name>gid</user-name>
-      <user-password>dfc8dfcfdfc6df9ddf9cdf93</user-password>
-      <schema-pattern>*.GID</schema-pattern>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="GIDPOST" uuid="3bfa8e35-1746-409a-91cd-bff9aec22b2b">
       <driver-ref>oracle</driver-ref>
       <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
       <jdbc-url>jdbc:oracle:thin:@//sc-oracle2.scx:1521/SCKASSA</jdbc-url>
-      <user-name>GIDPOST</user-name>
-      <user-password>dfc8dfcfdfc6df9ddf9cdf93</user-password>
-      <schema-pattern>*.GIDPOST</schema-pattern>
       <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="ODBC - test.xls" uuid="82eb2653-e2be-4e6f-a0e9-efa592e81b7c">
+      <driver-ref>odbc.sun</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>sun.jdbc.odbc.JdbcOdbcDriver</jdbc-driver>
+      <jdbc-url>jdbc:odbc:Driver={Microsoft Excel Driver (*.xls)};DBQ=C:/test.xls</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="ODBC-Книга1.xlsx" uuid="83dfcd68-8472-4c1b-bfa7-a918ce2f174e">
+      <driver-ref>odbc.sun</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>sun.jdbc.odbc.JdbcOdbcDriver</jdbc-driver>
+      <jdbc-url>jdbc:odbc:Driver={Microsoft Excel Driver (*.xls)};DBQ=c:/Книга1.xlsx</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - postgres@localhost" uuid="33394e97-8fb6-481c-ab3f-8cdf908bd1e8">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$MAVEN_REPOSITORY$/org/postgresql/postgresql/9.3-1100-jdbc41/postgresql-9.3-1100-jdbc41.jar</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>
-

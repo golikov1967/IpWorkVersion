@@ -6,5 +6,6 @@ import java.util.Date;
 
 @Entity
 @DiscriminatorValue("INPUT_PAYMENT")
+@Access(value = AccessType.PROPERTY)
 public class InputPayment extends Payment {
 }

@@ -21,23 +21,23 @@
         <class>softclub.model.entities.pk.DocumentId</class>
         <properties>
             <!--Oracle-->
-            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@sc-oracle2:1521:SCKASSA"/>
-            <property name="javax.persistence.jdbc.user" value="gidpost"/>
-            <property name="javax.persistence.jdbc.password" value="bel769"/>
-            <property name="javax.persistence.target-database" value="Oracle"/>
+            <!--<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>-->
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@sc-oracle2:1521:SCKASSA"/>-->
+            <!--<property name="javax.persistence.jdbc.user" value="gidpost"/>-->
+            <!--<property name="javax.persistence.jdbc.password" value="bel769"/>-->
+            <!--<property name="javax.persistence.target-database" value="Oracle"/>-->
 
             <!--Postgres-->
-            <!--<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>-->
-            <!--<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/ipTestDB"/>-->
-            <!--<property name="javax.persistence.jdbc.user" value="check"/>-->
-            <!--<property name="javax.persistence.jdbc.password" value="check"/>-->
-            <!--<property name="eclipselink.target-database" value="PostgreSQL"/>-->
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/postgres"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="pas4admin"/>
+            <property name="eclipselink.target-database" value="PostgreSQL"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
 
             <!--<property name="eclipselink.target-server" value="WebLogic 10"/>-->
             <!--"drop-and-create-tables", "create-tables" "create-or-extend-tables" "both" "sql-script"-->
 
-            <property name="eclipselink.ddl-generation.output-mode" value="none"/>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="javax.persistence.application-location" value="."/>
             <property name="javax.persistence.create-ddl-jdbc-file-name" value="ipCreate.sql"/>

@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by gid_000 on 23.01.14.
@@ -83,8 +83,8 @@ public class InputDocTester extends CoreIpModelTester {
         EntityManager oldEm = oldDatabaseRule.getEntityManager();
         String sql = MessageFormat.format(
                 PAY_75000,
-                sdf.format(DateUtils.getFirstDayOfMounth(new Date())),
-                sdf.format(DateUtils.getLastDayOfMounth(new Date())));
+                sdf.format(DateUtils.getFirstDayOfMounth(new Date(System.currentTimeMillis()))),
+                sdf.format(DateUtils.getLastDayOfMounth(new Date(System.currentTimeMillis()))));
         sql = START_PATH + sql;
                 Query query = oldEm.createNativeQuery(sql);
         query.setParameter(1, nDoc);
@@ -123,6 +123,6 @@ public class InputDocTester extends CoreIpModelTester {
 
     protected Date parseDate(String sDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.parse(sDate);
+        return new Date(sdf.parse(sDate).getTime());
     }
 }
