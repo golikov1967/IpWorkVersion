@@ -58,29 +58,6 @@ public class ReportGeneratorEJBTest {
         assertNotNull(newEm);
     }
 
-    @Test
-    public void testGenerateReport() throws Exception {
-//        final ReportProperties props = new ReportProperties()
-//                .setBlank(IS_BLANK)
-//                .setReportKind(REPORT_KIND)
-//                .setReportType(CReportType.DOC)
-//                .setReportLocale(LOCALE)
-//                .setReportName(REPORT_NAME);
-
-        final long start = System.currentTimeMillis();
-
-        final GeneratedReport report = reportGenerator.generateReport(
-                new ReportProperties().setReportName(REPORT_NAME).setReportKind(REPORT_KIND),
-                Paths.get("src/test/resources", "by/softclub/fos/report/impl", INPUT_XML),
-                Paths.get("src/test/resources/reportTemplates", "xdo_win.xml"));
-        assertNotNull(report);
-
-        final long end = System.currentTimeMillis();
-        System.out.println("report generated in " + (end - start) + " ms");
-
-        saveReportBody(report);
-    }
-
     private void saveReportBody(GeneratedReport report) throws IOException {
         if (report.getReportBody() != null) {
             Path target = Paths.get("temp/", report.getFullReportName());
@@ -102,10 +79,13 @@ public class ReportGeneratorEJBTest {
     protected OutputPaymentDao outputPaymentDao;
 
     @Test
+    /**
+     * Печать списка платежек, отобранных по их номерам
+     */
     public void testGeneratePaymentReport() throws Exception {
         Payment pay = outputPaymentDao.findAny();
         payReportSave(pay);
-        List<OutputPayment> payList = outputPaymentDao.findAll();
+        List<OutputPayment> payList = outputPaymentDao.findDocs("688", "689");
         for(OutputPayment outPay: payList){
             payReportSave(outPay);
         }
@@ -121,7 +101,7 @@ public class ReportGeneratorEJBTest {
         assertNotNull(xml);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-        String reportKind = sdf.format(pay.getId().getDocDate());
+        String reportKind = sdf.format(pay.getId().getDocDate()) + pay.getPayType().getId();
 
         final GeneratedReport report = reportGenerator.generateReport(
                 new ReportProperties().setReportName("payDoc").setReportKind(reportKind),

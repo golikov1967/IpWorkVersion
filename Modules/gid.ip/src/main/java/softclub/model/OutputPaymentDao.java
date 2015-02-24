@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless
@@ -83,5 +84,17 @@ public class OutputPaymentDao extends AbstractDao<OutputPayment, DocumentId> {
         BigDecimal result = query.getSingleResult();
 
         return result == null? BigDecimal.ZERO: result;
+    }
+
+    public List<OutputPayment> findDocs(String ... numbers) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<OutputPayment> criteriaQuery = cb.createQuery(OutputPayment.class);
+        Root<OutputPayment> root = criteriaQuery.from(type);
+
+        criteriaQuery.where(
+                root.get(OutputPayment_.id).get(DocumentId_.docNumber).in(numbers)
+        );
+        TypedQuery<OutputPayment> query = em.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 }
