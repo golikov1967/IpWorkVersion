@@ -8,6 +8,8 @@ abstract class AbstractWritableSumm implements WritableSumm {
     String[] str100;
     String[] str11;
     String[] str10;
+    protected int startUnitIdx = 0;
+
     protected String getS1(int n, int gender) {
         return str1[gender][n];
     }
@@ -48,7 +50,7 @@ abstract class AbstractWritableSumm implements WritableSumm {
         if (num.longValue() == 0) {
             res.append(getS1(0, 0)).append(" ").append(getUnit(1, 0));
         }
-        int idx = 0;
+        int idx =  startUnitIdx;
         num = num.longValue() * 1000 + (long)((num.doubleValue() - num.longValue()) * 100);
         while (num.longValue() > 0) {
             StringBuffer triad = triadToString((int)(num.longValue() % 1000),
