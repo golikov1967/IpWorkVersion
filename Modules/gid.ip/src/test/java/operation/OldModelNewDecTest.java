@@ -38,6 +38,12 @@ public class OldModelNewDecTest {
 
         oldEm.getTransaction().begin();
 
+        //вычисляем тек. остаток по счету:
+        BigDecimal balance = new BigDecimal("145").
+                add(new BigDecimal("4200000")).
+                subtract(new BigDecimal("5000")).
+                subtract(new BigDecimal("5000"));
+
         try{
             //поискать платеж за обслуживание счета в текущем месяце
             Query query = oldEm.createNativeQuery("select id_pp, doc_date, doc_sum, payer_id, bank4get, beneficiary, pay_type_id, oper_date, bank4put, pay_type_text from out_pp o where o.pay_type_id = ? order by o.doc_date desc");
@@ -91,10 +97,9 @@ public class OldModelNewDecTest {
 
                 int expected = insertQuery.executeUpdate();
                 assertEquals(expected, 1);
+                balance = balance.subtract(TEHNO_MZDA);
             }
 
-            //вычисляем тек. остаток по счету:
-            BigDecimal balance = new BigDecimal("145").add(new BigDecimal("4200000")).subtract(TEHNO_MZDA);
             BigDecimal secondPay = balance.divide(new BigDecimal("1.01"), 1).divide(new BigDecimal("100.0"), 1).scaleByPowerOfTen(0);
             BigDecimal firstPay = secondPay.multiply(new BigDecimal("100"));
             BigDecimal delta = balance.subtract(secondPay).subtract(firstPay);
