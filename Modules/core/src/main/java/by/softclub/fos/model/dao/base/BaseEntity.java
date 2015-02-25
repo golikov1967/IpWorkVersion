@@ -8,7 +8,7 @@ import java.rmi.Remote;
  * Date: 18.12.13
  * Time: 9:29
  */
-public interface BaseEntity<ID extends Serializable> extends Serializable, Remote {
+public interface BaseEntity<ID> extends Serializable, Remote {
 
     ID getId();
 

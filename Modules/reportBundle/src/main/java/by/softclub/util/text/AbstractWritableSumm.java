@@ -50,8 +50,10 @@ abstract class AbstractWritableSumm implements WritableSumm {
         if (num.longValue() == 0) {
             res.append(getS1(0, 0)).append(" ").append(getUnit(1, 0));
         }
-        int idx =  startUnitIdx;
-        num = num.longValue() * 1000 + (long)((num.doubleValue() - num.longValue()) * 100);
+        int idx = startUnitIdx;
+        if(startUnitIdx==0){
+            num = num.longValue() * 1000 + (long)((num.doubleValue() - num.longValue()) * 100);
+        }
         while (num.longValue() > 0) {
             StringBuffer triad = triadToString((int)(num.longValue() % 1000),
                     getUnitGender(idx), idx < 1);

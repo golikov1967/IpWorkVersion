@@ -6,7 +6,7 @@ package by.softclub.util.text;
 public class WritableSummRuBYR extends WritableSummRu {
     {
         forms[0] = new String[]{"копейка", "копейки", "копеек", "1"};
-        forms[1] = new String[]{"Белорусский рубль", "Белорусского рубля", "Белорусских рублей", "0"};
+        forms[1] = new String[]{"белорусский рубль", "белорусского рубля", "белорусских рублей", "0"};
         startUnitIdx = 1;
     }
 }

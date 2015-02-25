@@ -15,9 +15,9 @@ public class WritableSummTest {
     }
     @Test
     public void  numberToStringRu(){
-        test("Ru", "RUB");
-        test("Ru", "USD");
-        test("Ru", "EUR");
+//        test("Ru", "RUB");
+//        test("Ru", "USD");
+//        test("Ru", "EUR");
         test("ru", "BYR");
     }
     @Test

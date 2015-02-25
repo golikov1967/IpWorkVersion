@@ -94,7 +94,7 @@ public class ReportGeneratorEJBTest {
     private void payReportSave(Payment pay) throws Exception {
         assertNotNull(pay);
 
-        NumberProcessor processor = new NumberProcessor("Ru", "RUB");
+        NumberProcessor processor = new NumberProcessor("Ru", "BYR");
         pay.setDocSumString(processor.numberToString(pay.getPaySum()));
 
         String xml = JaxbUtils.getFilePath(pay);

@@ -6,8 +6,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import softclub.model.AccountDao;
 import softclub.model.CurrencyDao;
+import softclub.model.PayTypeDao;
 import softclub.model.entities.*;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -29,6 +31,8 @@ public class IpModelTester extends CoreIpModelTester {
     AccountDao accountDao;
     @ObjectUnderTest
     CurrencyDao currencyDao;
+    @ObjectUnderTest
+    PayTypeDao payTypeDao;
 
 
     public static final String SELECT_PAY_TYPES =
@@ -91,10 +95,10 @@ public class IpModelTester extends CoreIpModelTester {
 
         //загрузка приходных документов
         loadIn_ppDocument(oldEm, newEm);
-        //загрузка субьектов
-        loadPayers(oldEm, newEm);
         //загрузка типов платежа
         loadPayTypes(oldEm, newEm);
+        //загрузка субьектов
+        loadPayers(oldEm, newEm);
         //загрузка расходных документов
         loadOut_ppDocument(oldEm, newEm);
     }
@@ -128,8 +132,12 @@ public class IpModelTester extends CoreIpModelTester {
 
     private void loadPayers(EntityManager oldEm, EntityManager newEm) {
         Query oldDocumentQuey = oldEm.createNativeQuery(
-                "select p.unp, p.name, p.bank_account, b.bank_code\n" +
-                " from payers p, banks b where p.payer_id = b.bank_id(+)");
+                "select p.unp, p.name, p.bank_account, b.bank_code, max(pt.type_code)\n" +
+                        " from payers p, banks b, out_pp op, pay_types pt\n" +
+                        " where p.payer_id = b.bank_id(+)\n" +
+                        "   and p.payer_id = op.beneficiary(+)\n" +
+                        "   and op.pay_type_id = pt.pay_type_id(+)\n" +
+                        "   group by p.unp, p.name, p.bank_account, b.bank_code");
         EntityTransaction transaction = newEm.getTransaction();
         transaction.begin();
         int i = 0;
@@ -148,7 +156,7 @@ public class IpModelTester extends CoreIpModelTester {
                 payer.setId(unp);
             }
             payer.setName((String) attr[1]);
-            payer.getAccounts().add(findAccount((String) attr[2], payer));
+            payer.getAccounts().add(findAccount((String) attr[2], payer, (String) attr[4]));
             newEm.merge(payer);
             LOGGER.info(payer.getName() + ":" + payer.getId());
         }
@@ -156,7 +164,7 @@ public class IpModelTester extends CoreIpModelTester {
         LOGGER.info("загрузка плательщиков прошла успешно, загружено " + oldDocumentQuey.getResultList().size() + " записей");
     }
 
-    private Account findAccount(String account, Payer owner) {
+    private Account findAccount(String account, Payer owner, String payTypeId) {
         Account result = null;
         if(StringUtils.isNotEmpty(account)){
             Long id = Long.valueOf(account);
@@ -164,6 +172,9 @@ public class IpModelTester extends CoreIpModelTester {
             if(result==null && account!=null){
                 result = new Account();
                 result.setId(id);
+                if(payTypeId!=null){
+                    result.setPayType(payTypeDao.find(payTypeId));
+                }
                 //result.setOwner(owner);
                 result.setCurrency(byr);
             }

@@ -68,8 +68,8 @@ public class OutputPayment extends Payment {
 
     @XmlElement(name = "PAY_CODE")
     @Transient
-    public String getPayCode() {
-        return Integer.toString(payType.getPayCode());
+    public Integer getPayCode() {
+        return payType.getPayCode();
     }
 
 
@@ -88,7 +88,15 @@ public class OutputPayment extends Payment {
     }
 
     private Account getPayerAccount(Payer accPayer) {
-        Account account = accPayer.getAccounts().iterator().next();
-        return account;
+        if(accPayer.getAccounts().size()>1){
+            for(Account account: accPayer.getAccounts()){
+                if(payType!=null){
+                    if(payType.getId().equals(account.getPayType().getId())){
+                        return account;
+                    }
+                }
+            }
+        }
+        return accPayer.getAccounts().iterator().next();
     }
 }

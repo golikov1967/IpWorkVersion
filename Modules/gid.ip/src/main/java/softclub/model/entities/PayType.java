@@ -24,7 +24,7 @@ public class PayType extends VersionedEntity<String> {
      */
     private String note;
 
-    private int payCode;
+    private Integer payCode;
 
     private int queue;
 
@@ -42,7 +42,7 @@ public class PayType extends VersionedEntity<String> {
         return code;
     }
 
-    public int getPayCode() {
+    public Integer getPayCode() {
         return payCode;
     }
 
@@ -62,7 +62,7 @@ public class PayType extends VersionedEntity<String> {
         this.code = Code;
     }
 
-    public void setPayCode(int payCode) {
+    public void setPayCode(Integer payCode) {
         this.payCode = payCode;
     }
 }

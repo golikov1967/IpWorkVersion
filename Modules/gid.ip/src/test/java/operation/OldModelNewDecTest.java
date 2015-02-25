@@ -61,7 +61,7 @@ public class OldModelNewDecTest {
 
             Calendar newOperDay = Calendar.getInstance();
             if(lastYearMonth < currentMonth){
-                newOperDay.set(Calendar.HOUR, 0);
+                //newOperDay.set(Calendar.HOUR, 0);
                 newOperDay.set(Calendar.MINUTE, 0);
                 newOperDay.set(Calendar.SECOND, 0);
                 newOperDay.set(Calendar.MILLISECOND, 0);

@@ -1,5 +1,7 @@
 package softclub.model.entities;
 
+import by.softclub.fos.model.dao.base.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,7 +14,7 @@ import java.io.Serializable;
  */
 @MappedSuperclass
 @Access(value = AccessType.PROPERTY)
-public abstract class VersionedEntity<I> implements Serializable {
+public abstract class VersionedEntity<I> implements BaseEntity<I> {
 
     private int version = 0;
     private I id;

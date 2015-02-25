@@ -81,4 +81,16 @@ public class Account implements BaseEntity<Long> {
     public void setId(Long newId) {
         accountNumber = newId;
     }
+
+    private PayType payType;
+
+    public void setPayType(PayType payType) {
+        this.payType = payType;
+    }
+
+    @JoinColumn(name = "PAY_TYPE_CODE", referencedColumnName = "CODE", nullable = true)
+    @ManyToOne(optional = true,  cascade = {CascadeType.ALL})
+    public PayType getPayType() {
+        return payType;
+    }
 }
