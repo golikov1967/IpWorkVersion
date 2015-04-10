@@ -55,7 +55,8 @@ public class DeclarationTester extends CoreIpModelTester {
         newEm.getTransaction().commit();
     }
 
-    /**
+    /**предварительно выполнить загрузку данных  IpModelTester.reloadData()
+     * и отключить пересоздание таблиц
      * TODO: Тест сверки сумм по декларациям старой и новой моделей
      */
     @Test
@@ -74,6 +75,7 @@ public class DeclarationTester extends CoreIpModelTester {
             newEm.getTransaction().begin();
             newEm.merge(newDecl);
             assertEquals(old.getS5(), newDecl.getNalog(), 0.01);
+            LOGGER.info(old.getId().getMonth() + "-" + old.getId().getYear());
             newEm.getTransaction().commit();
             oldDecl = old.getId().getMonth()==12? new Declaration(): newDecl;
         }
