@@ -47,7 +47,7 @@
 
             <!--Логирование SQL-запросов: CONFIG-нет FINE-да -->
             <property name="eclipselink.logging.logger" value="DefaultLogger"/>
-            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.level" value="CONFIG"/>
             <property name="eclipselink.logging.parameters" value="true"/>
             <property name="eclipselink.logging.thread" value="false"/>
             <property name="eclipselink.logging.session" value="false"/>

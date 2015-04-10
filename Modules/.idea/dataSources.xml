@@ -14,14 +14,12 @@
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="ODBC - test.xls" uuid="82eb2653-e2be-4e6f-a0e9-efa592e81b7c">
-      <driver-ref>odbc.sun</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>sun.jdbc.odbc.JdbcOdbcDriver</jdbc-driver>
       <jdbc-url>jdbc:odbc:Driver={Microsoft Excel Driver (*.xls)};DBQ=C:/test.xls</jdbc-url>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="ODBC-Книга1.xlsx" uuid="83dfcd68-8472-4c1b-bfa7-a918ce2f174e">
-      <driver-ref>odbc.sun</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>sun.jdbc.odbc.JdbcOdbcDriver</jdbc-driver>
       <jdbc-url>jdbc:odbc:Driver={Microsoft Excel Driver (*.xls)};DBQ=c:/Книга1.xlsx</jdbc-url>
